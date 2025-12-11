@@ -39,6 +39,9 @@
             BtnHome = new FontAwesome.Sharp.IconPictureBox();
             sqlCommand1 = new Microsoft.Data.SqlClient.SqlCommand();
             panel1 = new Panel();
+            BtnMini = new FontAwesome.Sharp.IconButton();
+            BtnBig = new FontAwesome.Sharp.IconButton();
+            BtnExit = new FontAwesome.Sharp.IconButton();
             LblHome = new Label();
             IconHome = new FontAwesome.Sharp.IconPictureBox();
             PanelDesktop = new Panel();
@@ -237,6 +240,9 @@
             // panel1
             // 
             panel1.BackColor = Color.MidnightBlue;
+            panel1.Controls.Add(BtnMini);
+            panel1.Controls.Add(BtnBig);
+            panel1.Controls.Add(BtnExit);
             panel1.Controls.Add(LblHome);
             panel1.Controls.Add(IconHome);
             panel1.Dock = DockStyle.Top;
@@ -244,6 +250,57 @@
             panel1.Name = "panel1";
             panel1.Size = new Size(1320, 80);
             panel1.TabIndex = 1;
+            // 
+            // BtnMini
+            // 
+            BtnMini.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            BtnMini.BackColor = Color.MidnightBlue;
+            BtnMini.FlatAppearance.BorderSize = 0;
+            BtnMini.FlatStyle = FlatStyle.Flat;
+            BtnMini.IconChar = FontAwesome.Sharp.IconChar.Subtract;
+            BtnMini.IconColor = Color.White;
+            BtnMini.IconFont = FontAwesome.Sharp.IconFont.Auto;
+            BtnMini.IconSize = 20;
+            BtnMini.Location = new Point(1188, 0);
+            BtnMini.Name = "BtnMini";
+            BtnMini.Size = new Size(40, 20);
+            BtnMini.TabIndex = 5;
+            BtnMini.UseVisualStyleBackColor = false;
+            BtnMini.Click += BtnMini_Click;
+            // 
+            // BtnBig
+            // 
+            BtnBig.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            BtnBig.BackColor = Color.MidnightBlue;
+            BtnBig.FlatAppearance.BorderSize = 0;
+            BtnBig.FlatStyle = FlatStyle.Flat;
+            BtnBig.IconChar = FontAwesome.Sharp.IconChar.WindowMaximize;
+            BtnBig.IconColor = Color.White;
+            BtnBig.IconFont = FontAwesome.Sharp.IconFont.Auto;
+            BtnBig.IconSize = 20;
+            BtnBig.Location = new Point(1234, 0);
+            BtnBig.Name = "BtnBig";
+            BtnBig.Size = new Size(40, 20);
+            BtnBig.TabIndex = 4;
+            BtnBig.UseVisualStyleBackColor = false;
+            BtnBig.Click += BtnBig_Click;
+            // 
+            // BtnExit
+            // 
+            BtnExit.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            BtnExit.BackColor = Color.Red;
+            BtnExit.FlatAppearance.BorderSize = 0;
+            BtnExit.FlatStyle = FlatStyle.Flat;
+            BtnExit.IconChar = FontAwesome.Sharp.IconChar.Close;
+            BtnExit.IconColor = Color.White;
+            BtnExit.IconFont = FontAwesome.Sharp.IconFont.Auto;
+            BtnExit.IconSize = 20;
+            BtnExit.Location = new Point(1280, 0);
+            BtnExit.Name = "BtnExit";
+            BtnExit.Size = new Size(40, 20);
+            BtnExit.TabIndex = 3;
+            BtnExit.UseVisualStyleBackColor = false;
+            BtnExit.Click += BtnExit_Click;
             // 
             // LblHome
             // 
@@ -333,5 +390,8 @@
         private Label LblHome;
         private Panel PanelDesktop;
         private FontAwesome.Sharp.IconPictureBox iconPictureBox1;
+        private FontAwesome.Sharp.IconButton BtnExit;
+        private FontAwesome.Sharp.IconButton BtnMini;
+        private FontAwesome.Sharp.IconButton BtnBig;
     }
 }
