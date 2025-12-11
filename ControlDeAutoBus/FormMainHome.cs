@@ -36,7 +36,7 @@ namespace ControlDeAutoBus
             public static Color color = Color.FromArgb(24, 161, 251);
         }
 
-        private void ActivarButtons(object senderBtn, Color color)
+       public void ActivarButtons(object senderBtn, Color color)
         {
             if (senderBtn != null)
             {
@@ -72,7 +72,7 @@ namespace ControlDeAutoBus
             }
         }
 
-        private void OpenChildForm(Form childForm0)
+       public void OpenChildForm(Form childForm0)
         {
             if (currentChildForm != null)
             {
@@ -81,7 +81,7 @@ namespace ControlDeAutoBus
             currentChildForm = childForm0;
             childForm0.TopLevel = false;
             childForm0.FormBorderStyle = FormBorderStyle.None;
-            childForm0.Dock = DockStyle.Fill; 
+            childForm0.Dock = DockStyle.Fill;
             PanelDesktop.Controls.Add(childForm0);
             PanelDesktop.Tag = childForm0;
             childForm0.BringToFront();
@@ -89,48 +89,58 @@ namespace ControlDeAutoBus
 
         }
 
-        private void Dashboard_Click(object sender, EventArgs e)
+       public void Dashboard_Click(object sender, EventArgs e)
         {
             ActivarButtons(sender, RGBColor.color);
+            OpenChildForm(new View.FormDashboard());
         }
 
-        private void Choferes_Click(object sender, EventArgs e)
+       public void Choferes_Click(object sender, EventArgs e)
         {
             ActivarButtons(sender, RGBColor.color);
-
-        }
-
-        private void Autobuses_Click(object sender, EventArgs e)
-        {
-            ActivarButtons(sender, RGBColor.color);
+            OpenChildForm(new View.Drivers.Table(this));
 
         }
 
-        private void Rutas_Click(object sender, EventArgs e)
+       public void Autobuses_Click(object sender, EventArgs e)
         {
             ActivarButtons(sender, RGBColor.color);
+            OpenChildForm(new View.Buses.Table(this));
 
         }
 
-        private void Asignación_Click(object sender, EventArgs e)
+       public void Rutas_Click(object sender, EventArgs e)
         {
             ActivarButtons(sender, RGBColor.color);
+            OpenChildForm(new View.Routes.Table(this));
 
         }
 
-        private void Ajuste_Click(object sender, EventArgs e)
+       public void Asignación_Click(object sender, EventArgs e)
         {
             ActivarButtons(sender, RGBColor.color);
+            OpenChildForm(new View.Assignments.Table(this));
 
         }
 
-        private void BtnHome_Click(object sender, EventArgs e)
+       public void Ajuste_Click(object sender, EventArgs e)
         {
+            ActivarButtons(sender, RGBColor.color);
+            OpenChildForm(new View.FormSettings());
+
+        }
+
+       public void BtnHome_Click(object sender, EventArgs e)
+        {
+            if (currentChildForm != null)
+            {
+                currentChildForm.Close();
+            }
             Reset();
 
         }
 
-        private void Reset()
+       public void Reset()
         {
             DesactivarButtons();
             leftBorderBtn.Visible = false;
@@ -140,14 +150,36 @@ namespace ControlDeAutoBus
         }
         //Drag Form
         [DllImport("user32.DLL", EntryPoint = "ReleaseCapture")]
-        private extern static void ReleaseCapture();
+       public extern static void ReleaseCapture();
         [DllImport("user32.DLL", EntryPoint = "SendMessage")]
-        private extern static void SendMessage(System.IntPtr hWnd, int wMsg, int wParam, int lParam);
+       public extern static void SendMessage(System.IntPtr hWnd, int wMsg, int wParam, int lParam);
 
-        private void FormMainHome_MouseDown(object sender, MouseEventArgs e)
+       public void FormMainHome_MouseDown(object sender, MouseEventArgs e)
         {
             ReleaseCapture();
             SendMessage(this.Handle, 0x112, 0xf012, 0);
+
+        }
+
+
+       public void BtnExit_Click(object sender, EventArgs e)
+        {
+            Application.Exit();
+
+        }
+
+       public void BtnBig_Click(object sender, EventArgs e)
+        {
+            if (WindowState == FormWindowState.Normal)
+                WindowState = FormWindowState.Maximized;
+            else
+                WindowState = FormWindowState.Normal;
+
+        }
+
+       public void BtnMini_Click(object sender, EventArgs e)
+        {
+            WindowState = FormWindowState.Minimized;
 
         }
     }
