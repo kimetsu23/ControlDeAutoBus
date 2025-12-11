@@ -87,9 +87,9 @@ namespace ControlDeAutoBus.View.Drivers
             lblTitle.ForeColor = Color.FromArgb(31, 58, 147);
             lblTitle.Location = new Point(30, 30);
             lblTitle.Name = "lblTitle";
-            lblTitle.Size = new Size(304, 41);
+            lblTitle.Size = new Size(311, 41);
             lblTitle.TabIndex = 0;
-            lblTitle.Text = "Módulo de Choferes";
+            lblTitle.Text = "Registro de Choferes";
             // 
             // lblNombre
             // 

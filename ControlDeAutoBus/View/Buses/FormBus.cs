@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace ControlDeAutoBus.View
+namespace ControlDeAutoBus.View.Buses
 {
     public partial class FormBus : Form
     {
@@ -17,6 +17,15 @@ namespace ControlDeAutoBus.View
         {
             InitializeComponent();
             _mainForm = mainHome;
+
+        }
+        public void btnCancelar_Click(object sender, EventArgs e)
+        {
+            _mainForm.OpenChildForm(new Table(_mainForm));
+        }
+
+        public void btnRegistrar_Click(object sender, EventArgs e)
+        {
 
         }
     }

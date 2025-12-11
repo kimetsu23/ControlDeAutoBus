@@ -126,7 +126,7 @@ namespace ControlDeAutoBus
        public void Ajuste_Click(object sender, EventArgs e)
         {
             ActivarButtons(sender, RGBColor.color);
-            OpenChildForm(new View.FormSettings());
+            OpenChildForm(new View.Settings.Table(this));
 
         }
 

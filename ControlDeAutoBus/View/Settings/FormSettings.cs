@@ -6,15 +6,28 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Documents;
 using System.Windows.Forms;
 
-namespace ControlDeAutoBus.View
+namespace ControlDeAutoBus.View.Settings
 {
     public partial class FormSettings : Form
     {
-        public FormSettings()
+        private readonly FormMainHome _mainForm;
+        public FormSettings(FormMainHome mainForm)
         {
             InitializeComponent();
+            _mainForm = mainForm;
+        }
+
+        public void btnCancelar_Click(object sender, EventArgs e)
+        {
+            _mainForm.OpenChildForm(new Table(_mainForm));
+        }
+
+        public void btnRegistrar_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }
