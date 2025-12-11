@@ -22,7 +22,7 @@ namespace ControlDeAutoBus.View.Drivers
 
         public void btnCancelar_Click(object sender, EventArgs e)
         {
-            Table driversTable = new Table(_mainForm);
+            _mainForm.OpenChildForm(new Table(_mainForm));
         }
 
         public void btnRegistrar_Click(object sender, EventArgs e)
