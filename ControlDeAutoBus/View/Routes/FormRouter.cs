@@ -22,7 +22,7 @@ namespace ControlDeAutoBus.View.Routes
         }
         public void btnCancelar_Click(object sender, EventArgs e)
         {
-            Navegator.GoTo(new Table(_mainForm));
+            Navigator.GoTo(new Table(_mainForm));
         }
         private void LoadRouteData()
         {
@@ -45,7 +45,7 @@ namespace ControlDeAutoBus.View.Routes
                 MessageBoxButtons.OK,
                 MessageBoxIcon.Information
             );
-            Navegator.GoTo(new Table(_mainForm));
+            Navigator.GoTo(new Table(_mainForm));
 
         }
     }

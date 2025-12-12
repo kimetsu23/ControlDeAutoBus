@@ -19,15 +19,14 @@ namespace ControlDeAutoBus.Infrastructure.Repositories
         {
             using (SqlConnection connection = new SqlConnection(_connectionString))
             {
-                SqlCommand cmd = new SqlCommand("RegistrarUsuarios", connection);
+                SqlCommand cmd = new SqlCommand("RegistrarUsuario", connection);
                 cmd.CommandType = CommandType.StoredProcedure;
 
                 cmd.Parameters.AddWithValue("@Nombre", user.Name);
                 cmd.Parameters.AddWithValue("@Apellido", user.LastName);
                 cmd.Parameters.AddWithValue("@Usuario", user.User);
                 cmd.Parameters.AddWithValue("@Clave", user.Password);
-                cmd.Parameters.AddWithValue("@RoleID", user.Rol);
-                cmd.Parameters.AddWithValue("@Ano", user.CreateDate);
+                cmd.Parameters.AddWithValue("@RolID", user.Rol);
 
                 connection.Open();
                 cmd.ExecuteNonQuery();
@@ -40,7 +39,7 @@ namespace ControlDeAutoBus.Infrastructure.Repositories
 
             using (SqlConnection connection = new SqlConnection(_connectionString))
             {
-                SqlCommand cmd = new SqlCommand("Usuarios_GetAll", connection);
+                SqlCommand cmd = new SqlCommand("Usuario_GetAll", connection);
                 cmd.CommandType = CommandType.StoredProcedure;
 
                 connection.Open();
@@ -50,7 +49,7 @@ namespace ControlDeAutoBus.Infrastructure.Repositories
                 {
                     users.Add(new Usuarios
                     {
-                        Id = reader.GetInt32(0),
+                        Id = reader.GetGuid(0),
                         Name = reader.GetString(1),
                         LastName = reader.GetString(2),
                         User = reader.GetString(3),
@@ -64,15 +63,15 @@ namespace ControlDeAutoBus.Infrastructure.Repositories
             return users;
         }
 
-        public Usuarios GetById(int id)
+        public Usuarios GetById(Guid id)
         {
             Usuarios? user = null;
 
             using (SqlConnection connection = new SqlConnection(_connectionString))
             {
-                SqlCommand cmd = new SqlCommand("Usuarios_GetById", connection);
+                SqlCommand cmd = new SqlCommand("Usuario_GetById", connection);
                 cmd.CommandType = CommandType.StoredProcedure;
-                cmd.Parameters.AddWithValue("@Id", id);
+                cmd.Parameters.AddWithValue("@UsuarioID", id);
 
                 connection.Open();
                 SqlDataReader reader = cmd.ExecuteReader();
@@ -81,7 +80,7 @@ namespace ControlDeAutoBus.Infrastructure.Repositories
                 {
                     user = new Usuarios
                     {
-                        Id = reader.GetInt32(0),
+                        Id = reader.GetGuid(0),
                         Name = reader.GetString(1),
                         LastName = reader.GetString(2),
                         User = reader.GetString(3),
@@ -101,28 +100,28 @@ namespace ControlDeAutoBus.Infrastructure.Repositories
         {
             using (SqlConnection connection = new SqlConnection(_connectionString))
             {
-                SqlCommand cmd = new SqlCommand("Usuarios_Update", connection);
+                SqlCommand cmd = new SqlCommand("Usuario_Update", connection);
                 cmd.CommandType = CommandType.StoredProcedure;
 
-                cmd.Parameters.AddWithValue("@Id", user.Id);
+                cmd.Parameters.AddWithValue("@UsuarioID", user.Id);
                 cmd.Parameters.AddWithValue("@Nombre", user.Name);
                 cmd.Parameters.AddWithValue("@Apellido", user.LastName);
                 cmd.Parameters.AddWithValue("@Usuario", user.User);
                 cmd.Parameters.AddWithValue("@Clave", user.Password);
-                cmd.Parameters.AddWithValue("@RoleID", user.Rol);
+                cmd.Parameters.AddWithValue("@RolID", user.Rol);
 
                 connection.Open();
                 cmd.ExecuteNonQuery();
             }
         }
 
-        public void Delete(int id)
+        public void Delete(Guid id)
         {
             using (SqlConnection connection = new SqlConnection(_connectionString))
             {
-                SqlCommand cmd = new SqlCommand("Usuarios_SoftDelete", connection);
+                SqlCommand cmd = new SqlCommand("Usuario_SoftDelete", connection);
                 cmd.CommandType = CommandType.StoredProcedure;
-                cmd.Parameters.AddWithValue("@Id", id);
+                cmd.Parameters.AddWithValue("@UsuarioID", id);
 
                 connection.Open();
                 cmd.ExecuteNonQuery();

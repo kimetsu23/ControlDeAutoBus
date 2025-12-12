@@ -11,9 +11,9 @@ namespace ControlDeAutoBus.Domain.SharedInterfaces
     {
         void AddAll(Usuarios user);
         List<Usuarios> GetAll();
-        Usuarios GetById(int id);
+        Usuarios GetById(Guid id);
         void Update(Usuarios user);
-        void Delete(int id);
+        void Delete(Guid id);
 
     }
 }

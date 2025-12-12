@@ -36,13 +36,16 @@
         private TextBox txtUsuario;
         //private DateTimePicker dtpFechaNacimiento;
         private Label lblRol;
-        private TextBox txtRol;
         private Button btnRegistrar;
         private Button btnCancelar;
 
         private void InitializeComponent()
         {
             panelMain = new Panel();
+            IconEye = new FontAwesome.Sharp.IconPictureBox();
+            dtpRol = new ComboBox();
+            lblClave = new Label();
+            txtClave = new TextBox();
             lblTitle = new Label();
             lblNombre = new Label();
             txtNombre = new TextBox();
@@ -51,17 +54,17 @@
             lblUsuario = new Label();
             txtUsuario = new TextBox();
             lblRol = new Label();
-            txtRol = new TextBox();
             btnRegistrar = new Button();
             btnCancelar = new Button();
-            lblClave = new Label();
-            txtClave = new TextBox();
             panelMain.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)IconEye).BeginInit();
             SuspendLayout();
             // 
             // panelMain
             // 
             panelMain.BackColor = Color.White;
+            panelMain.Controls.Add(IconEye);
+            panelMain.Controls.Add(dtpRol);
             panelMain.Controls.Add(lblClave);
             panelMain.Controls.Add(txtClave);
             panelMain.Controls.Add(lblTitle);
@@ -72,13 +75,63 @@
             panelMain.Controls.Add(lblUsuario);
             panelMain.Controls.Add(txtUsuario);
             panelMain.Controls.Add(lblRol);
-            panelMain.Controls.Add(txtRol);
             panelMain.Controls.Add(btnRegistrar);
             panelMain.Controls.Add(btnCancelar);
             panelMain.Location = new Point(30, 30);
             panelMain.Name = "panelMain";
             panelMain.Size = new Size(440, 580);
             panelMain.TabIndex = 0;
+            // 
+            // IconEye
+            // 
+            IconEye.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            IconEye.BackColor = Color.White;
+            IconEye.Cursor = Cursors.Hand;
+            IconEye.ForeColor = Color.FromArgb(108, 117, 125);
+            IconEye.IconChar = FontAwesome.Sharp.IconChar.Eye;
+            IconEye.IconColor = Color.FromArgb(108, 117, 125);
+            IconEye.IconFont = FontAwesome.Sharp.IconFont.Auto;
+            IconEye.IconSize = 20;
+            IconEye.Location = new Point(381, 412);
+            IconEye.Name = "IconEye";
+            IconEye.Size = new Size(24, 24);
+            IconEye.TabIndex = 15;
+            IconEye.TabStop = false;
+            IconEye.Click += BtnVerClave_Click;
+            IconEye.MouseEnter += IconEye_MouseEnter;
+            IconEye.MouseLeave += IconEye_MouseLeave;
+            // 
+            // dtpRol
+            // 
+            dtpRol.BackColor = Color.White;
+            dtpRol.Font = new Font("Segoe UI", 10.2F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            dtpRol.FormattingEnabled = true;
+            dtpRol.Location = new Point(30, 336);
+            dtpRol.Name = "dtpRol";
+            dtpRol.Size = new Size(380, 31);
+            dtpRol.TabIndex = 13;
+            // 
+            // lblClave
+            // 
+            lblClave.AutoSize = true;
+            lblClave.Font = new Font("Segoe UI", 10F);
+            lblClave.ForeColor = Color.FromArgb(73, 80, 87);
+            lblClave.Location = new Point(30, 383);
+            lblClave.Name = "lblClave";
+            lblClave.Size = new Size(97, 23);
+            lblClave.TabIndex = 11;
+            lblClave.Text = "Contraseña";
+            // 
+            // txtClave
+            // 
+            txtClave.BackColor = Color.White;
+            txtClave.BorderStyle = BorderStyle.FixedSingle;
+            txtClave.Font = new Font("Segoe UI", 10F);
+            txtClave.Location = new Point(30, 409);
+            txtClave.Name = "txtClave";
+            txtClave.Size = new Size(380, 30);
+            txtClave.TabIndex = 12;
+            txtClave.UseSystemPasswordChar = true;
             // 
             // lblTitle
             // 
@@ -165,16 +218,6 @@
             lblRol.TabIndex = 7;
             lblRol.Text = "Rol";
             // 
-            // txtRol
-            // 
-            txtRol.BackColor = Color.White;
-            txtRol.BorderStyle = BorderStyle.FixedSingle;
-            txtRol.Font = new Font("Segoe UI", 10F);
-            txtRol.Location = new Point(30, 336);
-            txtRol.Name = "txtRol";
-            txtRol.Size = new Size(380, 30);
-            txtRol.TabIndex = 8;
-            // 
             // btnRegistrar
             // 
             btnRegistrar.BackColor = Color.FromArgb(31, 58, 147);
@@ -209,27 +252,6 @@
             btnCancelar.UseVisualStyleBackColor = false;
             btnCancelar.Click += btnCancelar_Click;
             // 
-            // lblClave
-            // 
-            lblClave.AutoSize = true;
-            lblClave.Font = new Font("Segoe UI", 10F);
-            lblClave.ForeColor = Color.FromArgb(73, 80, 87);
-            lblClave.Location = new Point(30, 383);
-            lblClave.Name = "lblClave";
-            lblClave.Size = new Size(97, 23);
-            lblClave.TabIndex = 11;
-            lblClave.Text = "Contraseña";
-            // 
-            // txtClave
-            // 
-            txtClave.BackColor = Color.White;
-            txtClave.BorderStyle = BorderStyle.FixedSingle;
-            txtClave.Font = new Font("Segoe UI", 10F);
-            txtClave.Location = new Point(30, 409);
-            txtClave.Name = "txtClave";
-            txtClave.Size = new Size(380, 30);
-            txtClave.TabIndex = 12;
-            // 
             // FormSettings
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
@@ -246,6 +268,7 @@
             Text = "Registro de Chofer";
             panelMain.ResumeLayout(false);
             panelMain.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)IconEye).EndInit();
             ResumeLayout(false);
         }
 
@@ -253,5 +276,7 @@
 
         private Label lblClave;
         private TextBox txtClave;
+        private ComboBox dtpRol;
+        private FontAwesome.Sharp.IconPictureBox IconEye;
     }
 }

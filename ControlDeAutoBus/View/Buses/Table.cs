@@ -128,7 +128,7 @@ namespace ControlDeAutoBus.View.Buses
             {
                 var bus = _busController.GetBusById(busId);
 
-                Navegator.GoTo(new FormBus(bus));
+                Navigator.GoTo(new FormBus(bus));
 
                 return;
             }
@@ -162,7 +162,7 @@ namespace ControlDeAutoBus.View.Buses
 
         public void btnRegistrar_Click(object sender, EventArgs e)
         {
-            Navegator.GoTo(new FormBus());
+            Navigator.GoTo(new FormBus());
 
         }
     }

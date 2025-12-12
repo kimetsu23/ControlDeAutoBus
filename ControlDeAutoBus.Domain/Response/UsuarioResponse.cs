@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ControlDeAutoBus.Domain.Entities
+namespace ControlDeAutoBus.Domain.Response
 {
-    public class Usuarios
+    public class UsuarioResponse
     {
         public Guid Id { get; set; }
         public string? Name { get; set; }
@@ -14,7 +14,5 @@ namespace ControlDeAutoBus.Domain.Entities
         public string? User { get; set; }
         public string? Password { get; set; }
         public int Rol { get; set; }
-        public bool IsDeleted { get; set; }
-        public DateTime CreateDate { get; set; }
     }
 }
