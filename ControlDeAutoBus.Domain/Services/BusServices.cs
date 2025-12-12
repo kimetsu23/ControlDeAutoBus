@@ -80,14 +80,14 @@ namespace ControlDeAutoBus.Domain.Services
                 }).ToList();
         }
 
-        public BusReponse GetBusById(int id)
+        public BusResponse GetBusById(int id)
         {
             var bus = _BusRepository.GetById(id);
 
             if (bus == null || bus.IsDeleted)
                 throw new KeyNotFoundException("El autobús no existe.");
 
-            return new BusReponse
+            return new BusResponse
             {
                 Id = bus.Id,
                 Brand = bus.Brand,

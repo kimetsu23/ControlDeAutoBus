@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ControlDeAutoBus.Core;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -21,7 +22,7 @@ namespace ControlDeAutoBus.View.Assignments
         }
         public void btnCancelar_Click(object sender, EventArgs e)
         {
-            _mainForm.OpenChildForm(new Table(_mainForm));
+            Navegator.GoTo(new Table(_mainForm));
         }
 
         public void btnRegistrar_Click(object sender, EventArgs e)

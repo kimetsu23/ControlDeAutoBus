@@ -34,7 +34,7 @@ namespace ControlDeAutoBus.View.Drivers
 
         public void btnCancelar_Click(object sender, EventArgs e)
         {
-            _mainForm.OpenChildForm(new Table(_mainForm));
+            Navegator.GoTo(new Table(_mainForm));
         }
 
         private void LoadDriverData()
