@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ControlDeAutoBus.Core
 {
-    public class Navegator
+    public class Navigator
     {
         public static FormMainHome MainForm { get; set; }
 
