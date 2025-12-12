@@ -32,7 +32,7 @@
         private Label lblMarca;
         private TextBox txtMarca;
         private Label lblModelo;
-        private TextBox txtApellido;
+        private TextBox txtModel;
         private Label lblYear;
         private DateTimePicker dtpYear;
         private Label lblColor;
@@ -49,7 +49,7 @@
             lblMarca = new Label();
             txtMarca = new TextBox();
             lblModelo = new Label();
-            txtApellido = new TextBox();
+            txtModel = new TextBox();
             lblYear = new Label();
             dtpYear = new DateTimePicker();
             lblColor = new Label();
@@ -68,7 +68,7 @@
             panelMain.Controls.Add(lblMarca);
             panelMain.Controls.Add(txtMarca);
             panelMain.Controls.Add(lblModelo);
-            panelMain.Controls.Add(txtApellido);
+            panelMain.Controls.Add(txtModel);
             panelMain.Controls.Add(lblYear);
             panelMain.Controls.Add(dtpYear);
             panelMain.Controls.Add(lblColor);
@@ -144,15 +144,15 @@
             lblModelo.TabIndex = 3;
             lblModelo.Text = "Modelo";
             // 
-            // txtApellido
+            // txtModel
             // 
-            txtApellido.BackColor = Color.White;
-            txtApellido.BorderStyle = BorderStyle.FixedSingle;
-            txtApellido.Font = new Font("Segoe UI", 10F);
-            txtApellido.Location = new Point(30, 196);
-            txtApellido.Name = "txtApellido";
-            txtApellido.Size = new Size(380, 30);
-            txtApellido.TabIndex = 4;
+            txtModel.BackColor = Color.White;
+            txtModel.BorderStyle = BorderStyle.FixedSingle;
+            txtModel.Font = new Font("Segoe UI", 10F);
+            txtModel.Location = new Point(30, 196);
+            txtModel.Name = "txtModel";
+            txtModel.Size = new Size(380, 30);
+            txtModel.TabIndex = 4;
             // 
             // lblYear
             // 
@@ -169,7 +169,11 @@
             // 
             dtpYear.CalendarFont = new Font("Segoe UI", 10F);
             dtpYear.Font = new Font("Segoe UI", 10F);
-            dtpYear.Format = DateTimePickerFormat.Short;
+            dtpYear.Format = DateTimePickerFormat.Custom;
+            dtpYear.CustomFormat = "yyyy";
+            dtpYear.ShowUpDown = true;
+            dtpYear.MinDate = new DateTime(1980, 1, 1);
+            dtpYear.MaxDate = new DateTime(DateTime.Now.Year + 1, 12, 31);
             dtpYear.Location = new Point(30, 406);
             dtpYear.Name = "dtpYear";
             dtpYear.Size = new Size(380, 30);

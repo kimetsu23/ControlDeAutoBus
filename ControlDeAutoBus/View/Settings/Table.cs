@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ControlDeAutoBus.Core;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -98,7 +99,7 @@ namespace ControlDeAutoBus.View.Settings
         }
         private void btnRegistrar_Click_1(object sender, EventArgs e)
         {
-            _mainForm.OpenChildForm(new FormSettings(_mainForm));
+            Navegator.GoTo(new FormSettings(_mainForm));
         }
     }
 }

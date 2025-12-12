@@ -1,12 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
+﻿
+using ControlDeAutoBus.Core;
 using FontAwesome.Sharp;
 using System.Runtime.InteropServices;
 
@@ -21,7 +14,7 @@ namespace ControlDeAutoBus
         public FormMainHome()
         {
             InitializeComponent();
-
+            Navegator.MainForm = this;
             leftBorderBtn = new Panel();
             leftBorderBtn.Size = new Size(7, 60);
             panelLayer.Controls.Add(leftBorderBtn);
@@ -92,41 +85,41 @@ namespace ControlDeAutoBus
        public void Dashboard_Click(object sender, EventArgs e)
         {
             ActivarButtons(sender, RGBColor.color);
-            OpenChildForm(new View.FormDashboard());
+            Navegator.GoTo(new View.FormDashboard());
         }
 
        public void Choferes_Click(object sender, EventArgs e)
         {
             ActivarButtons(sender, RGBColor.color);
-            OpenChildForm(new View.Drivers.Table(this));
+            Navegator.GoTo(new View.Drivers.Table(this));
 
         }
 
        public void Autobuses_Click(object sender, EventArgs e)
         {
             ActivarButtons(sender, RGBColor.color);
-            OpenChildForm(new View.Buses.Table(this));
+            Navegator.GoToBuses();
 
         }
 
        public void Rutas_Click(object sender, EventArgs e)
         {
             ActivarButtons(sender, RGBColor.color);
-            OpenChildForm(new View.Routes.Table(this));
+            Navegator.GoTo(new View.Routes.Table(this));
 
         }
 
        public void Asignación_Click(object sender, EventArgs e)
         {
             ActivarButtons(sender, RGBColor.color);
-            OpenChildForm(new View.Assignments.Table(this));
+            Navegator.GoTo(new View.Assignments.Table(this));
 
         }
 
        public void Ajuste_Click(object sender, EventArgs e)
         {
             ActivarButtons(sender, RGBColor.color);
-            OpenChildForm(new View.Settings.Table(this));
+            Navegator.GoTo(new View.Settings.Table(this));
 
         }
 

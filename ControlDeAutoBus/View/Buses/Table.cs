@@ -1,4 +1,6 @@
-﻿using ControlDeAutoBus.View.Drivers;
+﻿using ControlDeAutoBus.Controller;
+using ControlDeAutoBus.Core;
+using ControlDeAutoBus.View.Drivers;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -14,11 +16,14 @@ namespace ControlDeAutoBus.View.Buses
 {
     public partial class Table : Form
     {
-        private readonly FormMainHome _mainForm;
+        private FormMainHome mainForm;
+
+        private BusController _busController => AppServices.BusController;
+
         public Table(FormMainHome mainForm)
         {
             InitializeComponent();
-            _mainForm = mainForm;
+            this.mainForm = mainForm;
         }
 
         // Eventos del TextBox de búsqueda
@@ -72,6 +77,7 @@ namespace ControlDeAutoBus.View.Buses
 
         private void LoadSampleData()
         {
+            var data = _busController.GetAllBuses();
             // Agregar columnas
             tableGrid.Columns.Add("ID", "ID");
             tableGrid.Columns.Add("Marca", "Marca");
@@ -85,13 +91,14 @@ namespace ControlDeAutoBus.View.Buses
             tableGrid.Columns["Marca"].Width = 200;
             tableGrid.Columns["Modelo"].Width = 100;
 
-            // Datos de ejemplo (puedes comentar esto si no tienes datos aún)
-            /*
-            tableGrid.Rows.Add("001", "Problema de red", "Juan Pérez", "2024-12-10", "Sí", "Infraestructura", "Alta", "Alto", "Urgente", "Tech1");
-            tableGrid.Rows.Add("002", "Actualización software", "María López", "2024-12-11", "No", "Software", "Media", "Medio", "Normal", "Tech2");
-            */
+            tableGrid.Rows.Clear();
 
-            lblShowing.Text = $"Mostrando 0 a 0 de 0 entradas";
+            foreach (var bus in data)
+            {
+                tableGrid.Rows.Add(bus.Id, bus.Brand, bus.Model, bus.LicensePlate, bus.Color, bus.Year);
+            }
+
+            lblShowing.Text = $"Mostrando {data.Count} entradas";
         }
 
         //Drag Form
@@ -108,7 +115,7 @@ namespace ControlDeAutoBus.View.Buses
 
         public void btnRegistrar_Click(object sender, EventArgs e)
         {
-            _mainForm.OpenChildForm(new FormBus(_mainForm));
+            Navegator.GoTo(new FormBus());
 
         }
     }
