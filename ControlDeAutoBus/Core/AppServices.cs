@@ -16,6 +16,7 @@ namespace ControlDeAutoBus.Core
         public static BusController BusController { get; private set; }
         public static ChoferesController ChoferesController { get; private set; }
         public static RutasController RutasController { get; private set; }
+        public static UsuarioController UsuarioController { get; private set; }
 
         public static void Init()
         {
@@ -30,6 +31,10 @@ namespace ControlDeAutoBus.Core
             IRouteRepository rutasRepository = new RouteRepository();
             IRoutesServices rutasService = new RoutesServices(rutasRepository);
             RutasController = new RutasController(rutasService);
+
+            IUserRepository usuarioRepository = new UserRepository();
+            IUserServices usuarioService = new UserServices(usuarioRepository);
+            UsuarioController = new UsuarioController(usuarioService);
 
 
         }

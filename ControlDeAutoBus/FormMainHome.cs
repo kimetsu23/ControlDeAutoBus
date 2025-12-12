@@ -14,7 +14,7 @@ namespace ControlDeAutoBus
         public FormMainHome()
         {
             InitializeComponent();
-            Navegator.MainForm = this;
+            Navigator.MainForm = this;
             leftBorderBtn = new Panel();
             leftBorderBtn.Size = new Size(7, 60);
             panelLayer.Controls.Add(leftBorderBtn);
@@ -85,41 +85,41 @@ namespace ControlDeAutoBus
        public void Dashboard_Click(object sender, EventArgs e)
         {
             ActivarButtons(sender, RGBColor.color);
-            Navegator.GoTo(new View.FormDashboard());
+            Navigator.GoTo(new View.FormDashboard());
         }
 
        public void Choferes_Click(object sender, EventArgs e)
         {
             ActivarButtons(sender, RGBColor.color);
-            Navegator.GoTo(new View.Drivers.Table(this));
+            Navigator.GoTo(new View.Drivers.Table(this));
 
         }
 
        public void Autobuses_Click(object sender, EventArgs e)
         {
             ActivarButtons(sender, RGBColor.color);
-            Navegator.GoToBuses();
+            Navigator.GoToBuses();
 
         }
 
        public void Rutas_Click(object sender, EventArgs e)
         {
             ActivarButtons(sender, RGBColor.color);
-            Navegator.GoTo(new View.Routes.Table(this));
+            Navigator.GoTo(new View.Routes.Table(this));
 
         }
 
        public void Asignación_Click(object sender, EventArgs e)
         {
             ActivarButtons(sender, RGBColor.color);
-            Navegator.GoTo(new View.Assignments.Table(this));
+            Navigator.GoTo(new View.Assignments.Table(this));
 
         }
 
        public void Ajuste_Click(object sender, EventArgs e)
         {
             ActivarButtons(sender, RGBColor.color);
-            Navegator.GoTo(new View.Settings.Table(this));
+            Navigator.GoTo(new View.Settings.Table(this));
 
         }
 

@@ -34,7 +34,7 @@ namespace ControlDeAutoBus.View.Buses
         }
         public void btnCancelar_Click(object sender, EventArgs e)
         {
-            Navegator.GoToBuses();
+            Navigator.GoToBuses();
         }
         private void LoadBusData()
         {
@@ -70,7 +70,7 @@ namespace ControlDeAutoBus.View.Buses
                 MessageBoxButtons.OK,
                 MessageBoxIcon.Information
             );
-            Navegator.GoToBuses();
+            Navigator.GoToBuses();
         }
     }
 }

@@ -122,7 +122,7 @@ namespace ControlDeAutoBus.View.Drivers
             {
                 var bus = _choferesController.GetChoferesById(Id);
 
-                Navegator.GoTo(new FormDrivers(bus));
+                Navigator.GoTo(new FormDrivers(bus));
 
                 return;
             }
@@ -157,7 +157,7 @@ namespace ControlDeAutoBus.View.Drivers
 
         public void btnRegistrar_Click(object sender, EventArgs e)
         {
-            Navegator.GoTo(new FormDrivers(_mainForm));
+            Navigator.GoTo(new FormDrivers(_mainForm));
 
         }
     }

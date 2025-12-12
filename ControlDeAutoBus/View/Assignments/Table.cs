@@ -108,7 +108,7 @@ namespace ControlDeAutoBus.View.Assignments
 
         public void btnRegistrar_Click(object sender, EventArgs e)
         {
-            Navegator.GoTo(new FormAssignments(_mainForm));
+            Navigator.GoTo(new FormAssignments(_mainForm));
 
         }
     }

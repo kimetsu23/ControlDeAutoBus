@@ -1,5 +1,6 @@
 ﻿using ControlDeAutoBus.Controller;
 using ControlDeAutoBus.Core;
+using ControlDeAutoBus.Domain.Request;
 using ControlDeAutoBus.Domain.Response;
 using System;
 using System.Collections.Generic;
@@ -34,7 +35,7 @@ namespace ControlDeAutoBus.View.Drivers
 
         public void btnCancelar_Click(object sender, EventArgs e)
         {
-            Navegator.GoTo(new Table(_mainForm));
+            Navigator.GoTo(new Table(_mainForm));
         }
 
         private void LoadDriverData()
@@ -51,7 +52,7 @@ namespace ControlDeAutoBus.View.Drivers
 
         public void btnRegistrar_Click(object sender, EventArgs e)
         {
-            var choferRequest = new Domain.Request.ChoferesRequest
+            var choferRequest = new ChoferesRequest
             {
                 Id = _chofer?.Id ?? 0,
                 Name = txtNombre.Text,
@@ -69,7 +70,7 @@ namespace ControlDeAutoBus.View.Drivers
                 MessageBoxIcon.Information
                 );
 
-            Navegator.GoTo(new Table(_mainForm));
+            Navigator.GoTo(new Table(_mainForm));
 
         }
     }
