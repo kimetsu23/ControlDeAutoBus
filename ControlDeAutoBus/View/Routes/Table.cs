@@ -1,4 +1,5 @@
-﻿using ControlDeAutoBus.View.Drivers;
+﻿using ControlDeAutoBus.Core;
+using ControlDeAutoBus.View.Drivers;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -99,7 +100,7 @@ namespace ControlDeAutoBus.View.Routes
         }
         private void btnRegistrar_Click_1(object sender, EventArgs e)
         {
-            _mainForm.OpenChildForm(new FormRouter(_mainForm));
+            Navegator.GoTo(new FormRouter(_mainForm));
         }
 
 

@@ -8,16 +8,16 @@ namespace ControlDeAutoBus.Infrastructure.Repositories
 {
     public class ChoferRepository : IChoferRepository
     {
-        private readonly string connectionString;
+        private readonly string? _connectionString;
 
-        public ChoferRepository(IConfiguration config)
+        public ChoferRepository()
         {
-            connectionString = config.GetConnectionString("Connetion");
+            _connectionString = Database.ConnectionString;
         }
 
         public void AddAll(Choferes driver)
         {
-            using (SqlConnection connection = new SqlConnection(connectionString))
+            using (SqlConnection connection = new SqlConnection(_connectionString))
             {
                 SqlCommand cmd = new SqlCommand("RegistrarChofer", connection);
                 cmd.CommandType = CommandType.StoredProcedure;
@@ -37,7 +37,7 @@ namespace ControlDeAutoBus.Infrastructure.Repositories
         {
             var drivers = new List<Choferes>();
 
-            using (SqlConnection connection = new SqlConnection(connectionString))
+            using (SqlConnection connection = new SqlConnection(_connectionString))
             {
                 SqlCommand cmd = new SqlCommand("Chofer_GetAll", connection);
                 cmd.CommandType = CommandType.StoredProcedure;
@@ -64,9 +64,9 @@ namespace ControlDeAutoBus.Infrastructure.Repositories
 
         public Choferes GetById(int id)
         {
-            Choferes driver = null;
+            Choferes? driver = null;
 
-            using (SqlConnection connection = new SqlConnection(connectionString))
+            using (SqlConnection connection = new SqlConnection(_connectionString))
             {
                 SqlCommand cmd = new SqlCommand("Chofer_GetById", connection);
                 cmd.CommandType = CommandType.StoredProcedure;
@@ -89,12 +89,12 @@ namespace ControlDeAutoBus.Infrastructure.Repositories
                 }
             }
 
-            return driver;
+            return driver ?? throw new InvalidOperationException($"No se encontró un chofer con el Id {id}.");
         }
 
         public void Update(Choferes driver)
         {
-            using (SqlConnection connection = new SqlConnection(connectionString))
+            using (SqlConnection connection = new SqlConnection(_connectionString))
             {
                 SqlCommand cmd = new SqlCommand("Chofer_Update", connection);
                 cmd.CommandType = CommandType.StoredProcedure;
@@ -113,7 +113,7 @@ namespace ControlDeAutoBus.Infrastructure.Repositories
 
         public void Delete(int id)
         {
-            using (SqlConnection connection = new SqlConnection(connectionString))
+            using (SqlConnection connection = new SqlConnection(_connectionString))
             {
                 SqlCommand cmd = new SqlCommand("Chofer_SoftDelete", connection);
                 cmd.CommandType = CommandType.StoredProcedure;

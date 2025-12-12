@@ -1,24 +1,21 @@
 ﻿using ControlDeAutoBus.Domain.Entities;
-using ControlDeAutoBus.Domain.SharedInterfaces;
 using Microsoft.Data.SqlClient;
-using Microsoft.Extensions.Configuration;
 using System.Data;
-using System.Data.Entity;
 
 namespace ControlDeAutoBus.Infrastructure.Repositories
 {
     public class BusRepository : IBusRepository
     {
-        private readonly string connectionString;
+        private readonly string? _connectionString;
 
-        public BusRepository(IConfiguration config)
+        public BusRepository()
         {
-            connectionString = config.GetConnectionString("Connetion");
+            _connectionString = Database.ConnectionString;
         }
 
         public void AddAll(Autobuses bus)
         {
-            using (SqlConnection connection = new SqlConnection(connectionString))
+            using (SqlConnection connection = new SqlConnection(_connectionString))
             {
                 SqlCommand cmd = new SqlCommand("RegistrarAutobus", connection);
                 cmd.CommandType = CommandType.StoredProcedure;
@@ -38,7 +35,7 @@ namespace ControlDeAutoBus.Infrastructure.Repositories
         {
             var buses = new List<Autobuses>();
 
-            using (SqlConnection connection = new SqlConnection(connectionString))
+            using (SqlConnection connection = new SqlConnection(_connectionString))
             {
                 SqlCommand cmd = new SqlCommand("Autobus_GetAll", connection);
                 cmd.CommandType = CommandType.StoredProcedure;
@@ -65,9 +62,9 @@ namespace ControlDeAutoBus.Infrastructure.Repositories
 
         public Autobuses GetById(int id)
         {
-            Autobuses bus = null;
+            Autobuses? bus = null;
 
-            using (SqlConnection connection = new SqlConnection(connectionString))
+            using (SqlConnection connection = new SqlConnection(_connectionString))
             {
                 SqlCommand cmd = new SqlCommand("Autobus_GetById", connection);
                 cmd.CommandType = CommandType.StoredProcedure;
@@ -90,11 +87,14 @@ namespace ControlDeAutoBus.Infrastructure.Repositories
                 }
             }
 
+            if (bus == null)
+                throw new InvalidOperationException($"No se encontró el autobús con Id {id}.");
+
             return bus;
         }
         public void Delete(int id)
         {
-            using (SqlConnection connection = new SqlConnection(connectionString))
+            using (SqlConnection connection = new SqlConnection(_connectionString))
             {
                 SqlCommand cmd = new SqlCommand("Autobus_SoftDelete", connection);
                 cmd.CommandType = CommandType.StoredProcedure;
@@ -106,7 +106,7 @@ namespace ControlDeAutoBus.Infrastructure.Repositories
 
         public void Update(Autobuses bus)
         {
-            using (SqlConnection connection = new SqlConnection(connectionString))
+            using (SqlConnection connection = new SqlConnection(_connectionString))
             {
                 SqlCommand cmd = new SqlCommand("Autobus_Update", connection);
                 cmd.CommandType = CommandType.StoredProcedure;
