@@ -126,7 +126,10 @@ namespace ControlDeAutoBus.View.Buses
             // CLICK EN EDITAR
             if (mouseX < buttonWidth)
             {
-                MessageBox.Show($"Editar ID: {busId}");
+                var bus = _busController.GetBusById(busId);
+
+                Navegator.GoTo(new FormBus(bus));
+
                 return;
             }
 

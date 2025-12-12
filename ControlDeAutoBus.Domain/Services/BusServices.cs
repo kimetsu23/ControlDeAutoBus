@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using ControlDeAutoBus;
 using ControlDeAutoBus.Domain.Request;
 using ControlDeAutoBus.Domain.Services.Interface;
+using ControlDeAutoBus.Domain.Response;
 
 namespace ControlDeAutoBus.Domain.Services
 {
@@ -77,6 +78,24 @@ namespace ControlDeAutoBus.Domain.Services
                     Year = bus.Year,
                     IsDeleted = bus.IsDeleted
                 }).ToList();
+        }
+
+        public BusReponse GetBusById(int id)
+        {
+            var bus = _BusRepository.GetById(id);
+
+            if (bus == null || bus.IsDeleted)
+                throw new KeyNotFoundException("El autobús no existe.");
+
+            return new BusReponse
+            {
+                Id = bus.Id,
+                Brand = bus.Brand,
+                Model = bus.Model,
+                LicensePlate = bus.LicensePlate,
+                Color = bus.Color,
+                Year = bus.Year
+            };
         }
 
         public void DeleteBus(int id)

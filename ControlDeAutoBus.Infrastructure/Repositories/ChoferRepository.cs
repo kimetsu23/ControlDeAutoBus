@@ -96,7 +96,7 @@ namespace ControlDeAutoBus.Infrastructure.Repositories
                 SqlCommand cmd = new SqlCommand("Chofer_Update", connection);
                 cmd.CommandType = CommandType.StoredProcedure;
 
-                cmd.Parameters.AddWithValue("@Id", driver.Id);
+                cmd.Parameters.AddWithValue("@ChoferID", driver.Id);
                 cmd.Parameters.AddWithValue("@Nombre", driver.Name);
                 cmd.Parameters.AddWithValue("@Apellido", driver.LastName);
                 cmd.Parameters.AddWithValue("@Cedula", driver.IdCard);

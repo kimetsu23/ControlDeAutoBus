@@ -1,4 +1,5 @@
 ﻿using ControlDeAutoBus.Domain.Request;
+using ControlDeAutoBus.Domain.Response;
 using ControlDeAutoBus.Domain.Services.Interface;
 using System;
 using System.Collections.Generic;
@@ -21,9 +22,13 @@ namespace ControlDeAutoBus.Controller
         {
             _Service.AddOrUpdateChoferes(request);
         }
-        public List<Domain.Response.ChoferesResponse> GetAllChoferes()
+        public List<ChoferesResponse> GetAllChoferes()
         {
             return _Service.GetAllChoferes();
+        }
+        public ChoferesResponse GetChoferesById(int id)
+        {
+            return _Service.GetChoferesById(id);
         }
         public void DeleteChoferes(int id)
         {

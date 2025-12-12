@@ -120,9 +120,13 @@ namespace ControlDeAutoBus.View.Drivers
             // CLICK EN EDITAR
             if (mouseX < buttonWidth)
             {
-                MessageBox.Show($"Editar ID: {Id}");
+                var bus = _choferesController.GetChoferesById(Id);
+
+                Navegator.GoTo(new FormDrivers(bus));
+
                 return;
             }
+
 
             // CLICK EN ELIMINAR
             DialogResult result = MessageBox.Show(
