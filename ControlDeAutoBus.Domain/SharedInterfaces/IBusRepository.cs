@@ -7,7 +7,6 @@ namespace ControlDeAutoBus.Infrastructure.Repositories
         void AddAll(Autobuses bus);
         List<Autobuses> GetAll();
         Autobuses GetById(int id);
-
         void Delete(int id);
         void Update(Autobuses bus);
     }

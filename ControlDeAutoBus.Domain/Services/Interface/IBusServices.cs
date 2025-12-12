@@ -12,5 +12,6 @@ namespace ControlDeAutoBus.Domain.Services.Interface
     {
         void AddOrUpdateBus(BusRequest request);
         List<Autobuses> GetAllBuses();
+        void DeleteBus(int id);
     }
 }

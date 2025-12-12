@@ -24,6 +24,7 @@ namespace ControlDeAutoBus.View.Buses
         {
             InitializeComponent();
             this.mainForm = mainForm;
+            tableGrid.CellClick += tableGrid_CellClick;
         }
 
         // Eventos del TextBox de búsqueda
@@ -91,15 +92,58 @@ namespace ControlDeAutoBus.View.Buses
             tableGrid.Columns["Marca"].Width = 200;
             tableGrid.Columns["Modelo"].Width = 100;
 
+            if (!tableGrid.Columns.Contains("Acciones"))
+            {
+                tableGrid.Columns.Add(new ActionsButtonsColumn { Name = "Acciones" });
+            }
+
             tableGrid.Rows.Clear();
 
             foreach (var bus in data)
             {
                 tableGrid.Rows.Add(bus.Id, bus.Brand, bus.Model, bus.LicensePlate, bus.Color, bus.Year);
+
+                //tableGrid.Rows[index].Cells["Acciones"].Value = "Editar | Eliminar";
             }
 
             lblShowing.Text = $"Mostrando {data.Count} entradas";
         }
+
+
+        private void tableGrid_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex < 0 || tableGrid.Columns[e.ColumnIndex].Name != "Acciones")
+                return;
+
+            var cellBounds = tableGrid.GetCellDisplayRectangle(e.ColumnIndex, e.RowIndex, false);
+
+            int mouseX = tableGrid.PointToClient(Cursor.Position).X - cellBounds.X;
+
+            int buttonWidth = (cellBounds.Width - 15) / 2;
+
+            int busId = Convert.ToInt32(tableGrid.Rows[e.RowIndex].Cells["ID"].Value);
+
+            // CLICK EN EDITAR
+            if (mouseX < buttonWidth)
+            {
+                MessageBox.Show($"Editar ID: {busId}");
+                return;
+            }
+
+            // CLICK EN ELIMINAR
+            DialogResult result = MessageBox.Show(
+                "¿Seguro que quieres eliminar este autobús?",
+                "Confirmar eliminación",
+                MessageBoxButtons.YesNo,
+                MessageBoxIcon.Warning);
+
+            if (result == DialogResult.Yes)
+            {
+                _busController.DeleteBus(busId);
+                tableGrid.Rows.RemoveAt(e.RowIndex);
+            }
+        }
+
 
         //Drag Form
         [DllImport("user32.DLL", EntryPoint = "ReleaseCapture")]

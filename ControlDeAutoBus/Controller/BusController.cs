@@ -29,5 +29,10 @@ namespace ControlDeAutoBus.Controller
         {
             return _Service.GetAllBuses();
         }
+
+        public void DeleteBus(int id)
+        {
+            _Service.DeleteBus(id);
+        }
     }
 }

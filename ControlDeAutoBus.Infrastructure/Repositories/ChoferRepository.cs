@@ -22,7 +22,6 @@ namespace ControlDeAutoBus.Infrastructure.Repositories
                 SqlCommand cmd = new SqlCommand("RegistrarChofer", connection);
                 cmd.CommandType = CommandType.StoredProcedure;
 
-                cmd.Parameters.AddWithValue("@UsuarioID", driver.UserId);
                 cmd.Parameters.AddWithValue("@Nombre", driver.Name);
                 cmd.Parameters.AddWithValue("@Apellido", driver.LastName);
                 cmd.Parameters.AddWithValue("@Cedula", driver.IdCard);
@@ -49,12 +48,11 @@ namespace ControlDeAutoBus.Infrastructure.Repositories
                 {
                     drivers.Add(new Choferes
                     {
-                        Id = reader.GetInt32(0),
-                        UserId = reader.GetInt32(1),
-                        Name = reader.GetString(2),
-                        LastName = reader.GetString(3),
-                        IdCard = reader.GetString(4),
-                        DataOfBirth = reader.GetDateTime(5)
+                        Id = reader.GetInt32(reader.GetOrdinal("ChoferID")),
+                        Name = reader.GetString(reader.GetOrdinal("Nombre")),
+                        LastName = reader.GetString(reader.GetOrdinal("Apellido")),
+                        DataOfBirth = reader.GetDateTime(reader.GetOrdinal("FechaNacimiento")),
+                        IdCard = reader.GetString(reader.GetOrdinal("Cedula"))
                     });
                 }
             }
@@ -70,7 +68,7 @@ namespace ControlDeAutoBus.Infrastructure.Repositories
             {
                 SqlCommand cmd = new SqlCommand("Chofer_GetById", connection);
                 cmd.CommandType = CommandType.StoredProcedure;
-                cmd.Parameters.AddWithValue("@Id", id);
+                cmd.Parameters.AddWithValue("@ChoferID", id);
 
                 connection.Open();
                 SqlDataReader reader = cmd.ExecuteReader();
@@ -79,12 +77,11 @@ namespace ControlDeAutoBus.Infrastructure.Repositories
                 {
                     driver = new Choferes
                     {
-                        Id = reader.GetInt32(0),
-                        UserId = reader.GetInt32(1),
-                        Name = reader.GetString(2),
-                        LastName = reader.GetString(3),
-                        IdCard = reader.GetString(4),
-                        DataOfBirth = reader.GetDateTime(5)
+                        Id = reader.GetInt32(reader.GetOrdinal("ChoferID")),
+                        Name = reader.GetString(reader.GetOrdinal("Nombre")),
+                        LastName = reader.GetString(reader.GetOrdinal("Apellido")),
+                        DataOfBirth = reader.GetDateTime(reader.GetOrdinal("FechaNacimiento")),
+                        IdCard = reader.GetString(reader.GetOrdinal("Cedula"))
                     };
                 }
             }
@@ -100,7 +97,6 @@ namespace ControlDeAutoBus.Infrastructure.Repositories
                 cmd.CommandType = CommandType.StoredProcedure;
 
                 cmd.Parameters.AddWithValue("@Id", driver.Id);
-                cmd.Parameters.AddWithValue("@UsuarioID", driver.UserId);
                 cmd.Parameters.AddWithValue("@Nombre", driver.Name);
                 cmd.Parameters.AddWithValue("@Apellido", driver.LastName);
                 cmd.Parameters.AddWithValue("@Cedula", driver.IdCard);
@@ -117,7 +113,7 @@ namespace ControlDeAutoBus.Infrastructure.Repositories
             {
                 SqlCommand cmd = new SqlCommand("Chofer_SoftDelete", connection);
                 cmd.CommandType = CommandType.StoredProcedure;
-                cmd.Parameters.AddWithValue("@Id", id);
+                cmd.Parameters.AddWithValue("@ChoferID", id);
 
                 connection.Open();
                 cmd.ExecuteNonQuery();

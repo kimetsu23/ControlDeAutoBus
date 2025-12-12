@@ -21,21 +21,39 @@ namespace ControlDeAutoBus.Domain.Services
         }
         public void AddOrUpdateBus(BusRequest request)
         {
-          if (request == null)
-            {
+            if (request == null)
                 throw new ArgumentNullException(nameof(request), "El request no puede ser nulo.");
-            }
+
             try
             {
-                var bus = new Autobuses
+                if (request.Id == 0)
                 {
-                    Brand = request.Brand,
-                    Model = request.Model,
-                    LicensePlate = request.LicensePlate,
-                    Color = request.Color,
-                    Year = request.Year
-                };
-                _BusRepository.AddAll(bus);
+                    var newBus = new Autobuses
+                    {
+                        Brand = request.Brand,
+                        Model = request.Model,
+                        LicensePlate = request.LicensePlate,
+                        Color = request.Color,
+                        Year = request.Year,
+                        IsDeleted = false
+                    };
+
+                    _BusRepository.AddAll(newBus);
+                    return;
+                }
+
+                var existingBus = _BusRepository.GetById(request.Id);
+
+                if (existingBus.IsDeleted)
+                    existingBus.IsDeleted = false;
+
+                existingBus.Brand = request.Brand;
+                existingBus.Model = request.Model;
+                existingBus.LicensePlate = request.LicensePlate;
+                existingBus.Color = request.Color;
+                existingBus.Year = request.Year;
+
+                _BusRepository.Update(existingBus);
             }
             catch (Exception ex)
             {
@@ -45,17 +63,31 @@ namespace ControlDeAutoBus.Domain.Services
 
         public List<Autobuses> GetAllBuses()
         {
-            var bus = _BusRepository.GetAll();
+            var buses = _BusRepository.GetAll();
 
-            return bus.Select(bus => new Autobuses
-            {
-                Id = bus.Id,
-                Brand = bus.Brand,
-                Model = bus.Model,
-                LicensePlate = bus.LicensePlate,
-                Color = bus.Color,
-                Year = bus.Year
-            }).ToList();
+            return buses
+                .Where(b => !b.IsDeleted)
+                .Select(bus => new Autobuses
+                {
+                    Id = bus.Id,
+                    Brand = bus.Brand,
+                    Model = bus.Model,
+                    LicensePlate = bus.LicensePlate,
+                    Color = bus.Color,
+                    Year = bus.Year,
+                    IsDeleted = bus.IsDeleted
+                }).ToList();
+        }
+
+        public void DeleteBus(int id)
+        {
+            var bus = _BusRepository.GetById(id);
+
+            if (bus == null)
+                throw new KeyNotFoundException("El autobús no existe.");
+            if (bus.IsDeleted)
+                throw new InvalidOperationException("El autobús ya está eliminado.");
+            _BusRepository.Delete(id);
         }
 
     }

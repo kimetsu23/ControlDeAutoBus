@@ -15,76 +15,69 @@ namespace ControlDeAutoBus.Infrastructure.Repositories
 
         public void AddAll(Autobuses bus)
         {
-            using (SqlConnection connection = new SqlConnection(_connectionString))
-            {
-                SqlCommand cmd = new SqlCommand("RegistrarAutobus", connection);
-                cmd.CommandType = CommandType.StoredProcedure;
+            using SqlConnection connection = new SqlConnection(_connectionString);
+            using SqlCommand cmd = new SqlCommand("RegistrarAutobus", connection);
+            cmd.CommandType = CommandType.StoredProcedure;
 
-                cmd.Parameters.AddWithValue("@Marca", bus.Brand);
-                cmd.Parameters.AddWithValue("@Modelo", bus.Model);
-                cmd.Parameters.AddWithValue("@Placa", bus.LicensePlate);
-                cmd.Parameters.AddWithValue("@Color", bus.Color);
-                cmd.Parameters.AddWithValue("@Ano", bus.Year);
+            cmd.Parameters.AddWithValue("@Marca", bus.Brand);
+            cmd.Parameters.AddWithValue("@Modelo", bus.Model);
+            cmd.Parameters.AddWithValue("@Placa", bus.LicensePlate);
+            cmd.Parameters.AddWithValue("@Color", bus.Color);
+            cmd.Parameters.AddWithValue("@Ano", bus.Year);
 
-                connection.Open();
-                cmd.ExecuteNonQuery();
-            }
+            connection.Open();
+            cmd.ExecuteNonQuery();
         }
-
         public List<Autobuses> GetAll()
         {
-            var buses = new List<Autobuses>();
+            List<Autobuses> buses = new();
 
-            using (SqlConnection connection = new SqlConnection(_connectionString))
+            using SqlConnection connection = new SqlConnection(_connectionString);
+            using SqlCommand cmd = new SqlCommand("Autobus_GetAll", connection);
+            cmd.CommandType = CommandType.StoredProcedure;
+
+            connection.Open();
+            using SqlDataReader reader = cmd.ExecuteReader();
+
+            while (reader.Read())
             {
-                SqlCommand cmd = new SqlCommand("Autobus_GetAll", connection);
-                cmd.CommandType = CommandType.StoredProcedure;
-
-                connection.Open();
-                SqlDataReader reader = cmd.ExecuteReader();
-
-                while (reader.Read())
+                buses.Add(new Autobuses
                 {
-                    buses.Add(new Autobuses
-                    {
-                        Id = reader.GetInt32(0),
-                        Brand = reader.GetString(1),
-                        Model = reader.GetString(2),
-                        LicensePlate = reader.GetString(3),
-                        Color = reader.GetString(4),
-                        Year = reader.GetInt32(5)
-                    });
-                }
+                    Id = reader.GetInt32(0),
+                    Brand = reader.GetString(1),
+                    Model = reader.GetString(2),
+                    LicensePlate = reader.GetString(3),
+                    Color = reader.GetString(4),
+                    Year = reader.GetInt32(5)
+                });
             }
 
             return buses;
         }
-
         public Autobuses GetById(int id)
         {
             Autobuses? bus = null;
 
-            using (SqlConnection connection = new SqlConnection(_connectionString))
+            using SqlConnection connection = new SqlConnection(_connectionString);
+            using SqlCommand cmd = new SqlCommand("Autobus_GetById", connection);
+            cmd.CommandType = CommandType.StoredProcedure;
+
+            cmd.Parameters.AddWithValue("@AutobusID", id);
+
+            connection.Open();
+            using SqlDataReader reader = cmd.ExecuteReader();
+
+            if (reader.Read())
             {
-                SqlCommand cmd = new SqlCommand("Autobus_GetById", connection);
-                cmd.CommandType = CommandType.StoredProcedure;
-                cmd.Parameters.AddWithValue("@Id", id);
-
-                connection.Open();
-                SqlDataReader reader = cmd.ExecuteReader();
-
-                if (reader.Read())
+                bus = new Autobuses
                 {
-                    bus = new Autobuses
-                    {
-                        Id = reader.GetInt32(0),
-                        Brand = reader.GetString(1),
-                        Model = reader.GetString(2),
-                        LicensePlate = reader.GetString(3),
-                        Color = reader.GetString(4),
-                        Year = reader.GetInt32(5)
-                    };
-                }
+                    Id = reader.GetInt32(0),
+                    Brand = reader.GetString(1),
+                    Model = reader.GetString(2),
+                    LicensePlate = reader.GetString(3),
+                    Color = reader.GetString(4),
+                    Year = reader.GetInt32(5)
+                };
             }
 
             if (bus == null)
@@ -94,31 +87,30 @@ namespace ControlDeAutoBus.Infrastructure.Repositories
         }
         public void Delete(int id)
         {
-            using (SqlConnection connection = new SqlConnection(_connectionString))
-            {
-                SqlCommand cmd = new SqlCommand("Autobus_SoftDelete", connection);
-                cmd.CommandType = CommandType.StoredProcedure;
-                cmd.Parameters.AddWithValue("@Id", id);
-                connection.Open();
-                cmd.ExecuteNonQuery();
-            }
-        }
+            using SqlConnection connection = new SqlConnection(_connectionString);
+            using SqlCommand cmd = new SqlCommand("Autobus_SoftDelete", connection);
+            cmd.CommandType = CommandType.StoredProcedure;
 
+            cmd.Parameters.AddWithValue("@AutobusID", id);
+
+            connection.Open();
+            cmd.ExecuteNonQuery();
+        }
         public void Update(Autobuses bus)
         {
-            using (SqlConnection connection = new SqlConnection(_connectionString))
-            {
-                SqlCommand cmd = new SqlCommand("Autobus_Update", connection);
-                cmd.CommandType = CommandType.StoredProcedure;
-                cmd.Parameters.AddWithValue("@Id", bus.Id);
-                cmd.Parameters.AddWithValue("@Marca", bus.Brand);
-                cmd.Parameters.AddWithValue("@Modelo", bus.Model);
-                cmd.Parameters.AddWithValue("@Placa", bus.LicensePlate);
-                cmd.Parameters.AddWithValue("@Color", bus.Color);
-                cmd.Parameters.AddWithValue("@Ano", bus.Year);
-                connection.Open();
-                cmd.ExecuteNonQuery();
-            }
+            using SqlConnection connection = new SqlConnection(_connectionString);
+            using SqlCommand cmd = new SqlCommand("Autobus_Update", connection);
+            cmd.CommandType = CommandType.StoredProcedure;
+
+            cmd.Parameters.AddWithValue("@Id", bus.Id);
+            cmd.Parameters.AddWithValue("@Marca", bus.Brand);
+            cmd.Parameters.AddWithValue("@Modelo", bus.Model);
+            cmd.Parameters.AddWithValue("@Placa", bus.LicensePlate);
+            cmd.Parameters.AddWithValue("@Color", bus.Color);
+            cmd.Parameters.AddWithValue("@Ano", bus.Year);
+
+            connection.Open();
+            cmd.ExecuteNonQuery();
         }
     }
 }
