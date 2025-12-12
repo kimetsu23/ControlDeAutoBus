@@ -102,7 +102,7 @@ namespace ControlDeAutoBus.Infrastructure.Repositories
             using SqlCommand cmd = new SqlCommand("Autobus_Update", connection);
             cmd.CommandType = CommandType.StoredProcedure;
 
-            cmd.Parameters.AddWithValue("@Id", bus.Id);
+            cmd.Parameters.AddWithValue("@AutobusID", bus.Id);
             cmd.Parameters.AddWithValue("@Marca", bus.Brand);
             cmd.Parameters.AddWithValue("@Modelo", bus.Model);
             cmd.Parameters.AddWithValue("@Placa", bus.LicensePlate);

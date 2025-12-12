@@ -7,6 +7,7 @@ namespace ControlDeAutoBus.Domain.Services.Interface
     {
         void AddOrUpdateChoferes(ChoferesRequest choferes);
         List<ChoferesResponse> GetAllChoferes();
+        ChoferesResponse GetChoferesById(int id);
         void DeleteChoferes(int id);
 
     }

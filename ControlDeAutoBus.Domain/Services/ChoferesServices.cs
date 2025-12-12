@@ -67,6 +67,21 @@ namespace ControlDeAutoBus.Domain.Services
             }).ToList();
             return responseList;
         }
+        public ChoferesResponse GetChoferesById(int id)
+        {
+            var chofer = _choferesRepository.GetById(id);
+            if (chofer == null)
+                throw new KeyNotFoundException("El chofer no existe.");
+            var response = new ChoferesResponse
+            {
+                Id = chofer.Id,
+                Name = chofer.Name,
+                LastName = chofer.LastName,
+                IdCard = chofer.IdCard,
+                DataOfBirth = chofer.DataOfBirth
+            };
+            return response;
+        }
 
         public void DeleteChoferes(int id)
         {

@@ -1,5 +1,6 @@
 ﻿using ControlDeAutoBus.Domain.Entities;
 using ControlDeAutoBus.Domain.Request;
+using ControlDeAutoBus.Domain.Response;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,5 +14,6 @@ namespace ControlDeAutoBus.Domain.Services.Interface
         void AddOrUpdateBus(BusRequest request);
         List<Autobuses> GetAllBuses();
         void DeleteBus(int id);
+        BusReponse GetBusById(int id);
     }
 }
