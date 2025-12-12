@@ -12,7 +12,6 @@ namespace ControlDeAutoBus.Domain.SharedInterfaces
         void AddAll(Choferes driver);
         List<Choferes> GetAll();
         Choferes GetById(int id);
-
         void Delete(int id);
         void Update(Choferes bus);
 
