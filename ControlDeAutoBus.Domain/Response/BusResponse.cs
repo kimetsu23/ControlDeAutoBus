@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ControlDeAutoBus.Domain.Response
 {
-    public class BusReponse
+    public class BusResponse
     {
         public int Id { get; set; }
         public string? Brand { get; set; }

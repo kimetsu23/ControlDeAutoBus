@@ -17,7 +17,7 @@ namespace ControlDeAutoBus.View.Buses
     public partial class FormBus : Form
     {
         private BusController _busController => AppServices.BusController;
-        private BusReponse _bus;
+        private BusResponse _bus;
 
         // Constructor para registrar
         public FormBus()
@@ -26,7 +26,7 @@ namespace ControlDeAutoBus.View.Buses
         }
 
         // Constructor para editar
-        public FormBus(BusReponse bus)
+        public FormBus(BusResponse bus)
         {
             InitializeComponent();
             _bus = bus;

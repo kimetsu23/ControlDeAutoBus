@@ -62,7 +62,7 @@ namespace ControlDeAutoBus.Infrastructure.Repositories
             {
                 SqlCommand cmd = new SqlCommand("Ruta_GetById", connection);
                 cmd.CommandType = CommandType.StoredProcedure;
-                cmd.Parameters.AddWithValue("@Id", id);
+                cmd.Parameters.AddWithValue("@RutaID", id);
 
                 connection.Open();
                 SqlDataReader reader = cmd.ExecuteReader();
@@ -89,7 +89,7 @@ namespace ControlDeAutoBus.Infrastructure.Repositories
                 SqlCommand cmd = new SqlCommand("Ruta_Update", connection);
                 cmd.CommandType = CommandType.StoredProcedure;
 
-                cmd.Parameters.AddWithValue("@Id", route.Id);
+                cmd.Parameters.AddWithValue("@RutaID", route.Id);
                 cmd.Parameters.AddWithValue("@NombreRuta", route.NameRoute);
 
                 connection.Open();
@@ -103,7 +103,7 @@ namespace ControlDeAutoBus.Infrastructure.Repositories
             {
                 SqlCommand cmd = new SqlCommand("Ruta_SoftDelete", connection);
                 cmd.CommandType = CommandType.StoredProcedure;
-                cmd.Parameters.AddWithValue("@Id", id);
+                cmd.Parameters.AddWithValue("@RutaID", id);
 
                 connection.Open();
                 cmd.ExecuteNonQuery();

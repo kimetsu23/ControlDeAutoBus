@@ -30,7 +30,7 @@ namespace ControlDeAutoBus.Controller
             return _Service.GetAllBuses();
         }
 
-        public BusReponse GetBusById(int id)
+        public BusResponse GetBusById(int id)
         {
             return _Service.GetBusById(id);
         }

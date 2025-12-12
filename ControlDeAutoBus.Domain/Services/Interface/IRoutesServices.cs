@@ -9,11 +9,11 @@ using System.Threading.Tasks;
 
 namespace ControlDeAutoBus.Domain.Services.Interface
 {
-    public interface IBusServices
+    public interface IRoutesServices
     {
-        void AddOrUpdateBus(BusRequest request);
-        List<Autobuses> GetAllBuses();
-        void DeleteBus(int id);
-        BusResponse GetBusById(int id);
+        void AddOrUpdate(RutasRequest request);
+        List<Ruta> GetAllRoutes();
+        RutasResponse GetRouteById(int id);
+        void DeleteRoute(int id);
     }
 }
