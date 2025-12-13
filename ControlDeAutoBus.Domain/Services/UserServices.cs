@@ -4,6 +4,7 @@ using ControlDeAutoBus.Domain.Request;
 using ControlDeAutoBus.Domain.Response;
 using ControlDeAutoBus.Domain.Services.Interface;
 using ControlDeAutoBus.Domain.SharedInterfaces;
+using Microsoft.Data.SqlClient;
 
 namespace ControlDeAutoBus.Domain.Services
 {
@@ -19,8 +20,17 @@ namespace ControlDeAutoBus.Domain.Services
         {
             if (request == null) throw new ArgumentNullException(nameof(request));
 
-            try
+            if (request.Id == Guid.Empty)
+            {
+                var existingUsers = _userRepository.GetAll();
+                if (existingUsers.Any(u => u.User.Equals(request.User, StringComparison.OrdinalIgnoreCase)))
                 {
+                    throw new InvalidOperationException("Ya existe un usuario con el mismo nombre de usuario.");
+                }
+            }
+
+            try
+            {
                 var userEntity = new Usuarios
                 {
                     Id = request.Id,
@@ -39,6 +49,12 @@ namespace ControlDeAutoBus.Domain.Services
                 {
                     _userRepository.Update(userEntity);
                 }
+            }
+            catch (SqlException ex) when (ex.Number == 2627 || ex.Number == 2601)
+            {
+                throw new InvalidOperationException(
+                    "El nombre de usuario ya existe."
+                );
             }
             catch (Exception ex)
             {

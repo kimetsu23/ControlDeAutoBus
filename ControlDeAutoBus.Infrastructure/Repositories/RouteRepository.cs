@@ -91,6 +91,7 @@ namespace ControlDeAutoBus.Infrastructure.Repositories
 
                 cmd.Parameters.AddWithValue("@RutaID", route.Id);
                 cmd.Parameters.AddWithValue("@NombreRuta", route.NameRoute);
+                cmd.Parameters.AddWithValue("@Activo", route.Activo);
 
                 connection.Open();
                 cmd.ExecuteNonQuery();

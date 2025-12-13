@@ -108,6 +108,7 @@ namespace ControlDeAutoBus.Infrastructure.Repositories
             cmd.Parameters.AddWithValue("@Placa", bus.LicensePlate);
             cmd.Parameters.AddWithValue("@Color", bus.Color);
             cmd.Parameters.AddWithValue("@Ano", bus.Year);
+            cmd.Parameters.AddWithValue("@Activo", bus.Activo);
 
             connection.Open();
             cmd.ExecuteNonQuery();

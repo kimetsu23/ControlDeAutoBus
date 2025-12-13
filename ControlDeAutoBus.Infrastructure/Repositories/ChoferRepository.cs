@@ -101,6 +101,7 @@ namespace ControlDeAutoBus.Infrastructure.Repositories
                 cmd.Parameters.AddWithValue("@Apellido", driver.LastName);
                 cmd.Parameters.AddWithValue("@Cedula", driver.IdCard);
                 cmd.Parameters.AddWithValue("@FechaNacimiento", driver.DataOfBirth);
+                cmd.Parameters.AddWithValue("@Activo", driver.Activo);
 
                 connection.Open();
                 cmd.ExecuteNonQuery();
