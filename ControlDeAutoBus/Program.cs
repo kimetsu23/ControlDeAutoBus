@@ -1,4 +1,5 @@
 using ControlDeAutoBus.Core;
+using ControlDeAutoBus.Infrastructure.QuerySql;
 using ControlDeAutoBus.View;
 
 namespace ControlDeAutoBus
@@ -16,6 +17,8 @@ namespace ControlDeAutoBus
             ApplicationConfiguration.Initialize();
 
             AppServices.Init();
+
+            DatabaseSeeder.Seed();
             Application.Run(new FormLogin());
         }
     }
