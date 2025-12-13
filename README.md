@@ -77,3 +77,51 @@ La cadena de conexión se define en el archivo `appsettings.json` del proyecto d
 
 ```json
 "Connection": "Data Source=NAMESERVER;Initial Catalog=DATABASE;Integrated Security=True;TrustServerCertificate=True;"
+
+**Configuración obligatoria:**  
+Copiar al directorio de salida: **Copiar siempre**.  
+
+> Esto permite que la aplicación lea la cadena de conexión correctamente en tiempo de ejecución.
+
+### 📝 Scripts SQL
+
+**Ubicación:** `ControlDeAutoBus.Infrastructure/QuerySql`
+
+- Script con la base de datos completa.
+- Scripts separados:
+  - Creación de tablas.
+  - Creación de procedimientos almacenados.
+
+> Antes de ejecutar la aplicación es obligatorio:
+> 1. Crear la base de datos.
+> 2. Ejecutar los scripts SQL correspondientes.
+
+### 🌱 Inicialización de Datos (Database Seeding)
+
+**Clase:** `DatabaseSeeder`  
+
+**Funciones:**
+- Crear roles del sistema si no existen: **Admin, Chofer, Usuario**.
+- Crear un usuario administrador por defecto si no existe.
+
+> Permite usar el sistema inmediatamente después de la instalación.
+
+### 🔑 Credenciales de Acceso por Defecto
+
+- **Usuario:** admin  
+- **Clave:** Admin123  
+- **Rol:** Administrador  
+
+> La contraseña se almacena de forma segura utilizando **hash** mediante la clase `PasswordHasher`.
+
+### 🗃️ Acceso a Datos
+
+- Clase `Database` centraliza la lectura de la cadena de conexión y gestiona el acceso a la base de datos.
+- Repositorios separados por entidad, cada uno responsable de su contexto de datos.
+
+### 🔐 Autenticación y Roles
+
+- **Administrador:** Registro y gestión de choferes, rutas y autobuses.
+- **Usuario:** Asignación de choferes, autobuses y rutas.
+- **Chofer:** Rol reservado para futuras extensiones del sistema.
+
