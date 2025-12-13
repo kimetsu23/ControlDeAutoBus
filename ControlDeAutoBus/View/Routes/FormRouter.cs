@@ -4,17 +4,17 @@ using ControlDeAutoBus.Domain.Response;
 
 namespace ControlDeAutoBus.View.Routes
 {
-    public partial class FormRouter : Form
+    public partial class FormAssigments : Form
     {
         private readonly FormMainHome _mainForm;
         private RutasController _routesController => AppServices.RutasController;
         private RutasResponse _ruta;
-        public FormRouter(FormMainHome mainForm)
+        public FormAssigments(FormMainHome mainForm)
         {
             InitializeComponent();
             _mainForm = mainForm;
         }
-        public FormRouter(RutasResponse ruta)
+        public FormAssigments(RutasResponse ruta)
         {
             InitializeComponent();
             _ruta = ruta;

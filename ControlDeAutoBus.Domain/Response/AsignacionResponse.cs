@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ControlDeAutoBus.Domain.Entities
+namespace ControlDeAutoBus.Domain.Response
 {
-    public class Asignaciones
+    public class AsignacionResponse
     {
         public int Id { get; set; }
         public int DriverId { get; set; }
@@ -17,6 +17,5 @@ namespace ControlDeAutoBus.Domain.Entities
         public string? RutaNombre { get; set; }
         public bool Activa { get; set; }
         public DateTime DateAssignment { get; set; }
-        public bool IsDeleted { get; set; }
     }
 }

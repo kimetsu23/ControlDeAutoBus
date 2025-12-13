@@ -18,6 +18,8 @@ namespace ControlDeAutoBus.Core
         public static RutasController RutasController { get; private set; }
         public static UsuarioController UsuarioController { get; private set; }
 
+        public static AsignacionController AsignacionController { get; private set; }
+
         public static void Init()
         {
             IBusRepository busRepository = new BusRepository();
@@ -35,6 +37,15 @@ namespace ControlDeAutoBus.Core
             IUserRepository usuarioRepository = new UserRepository();
             IUserServices usuarioService = new UserServices(usuarioRepository);
             UsuarioController = new UsuarioController(usuarioService);
+
+            IAsignacionRepository asignacionRepository = new AsignacionRepository();
+            IAsignacionServices asignacionService = new AsignacionServices(
+                asignacionRepository,
+                choferesRepository,
+                busRepository,
+                rutasRepository
+            );
+            AsignacionController = new AsignacionController(asignacionService);
 
 
         }

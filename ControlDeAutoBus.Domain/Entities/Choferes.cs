@@ -15,5 +15,6 @@ namespace ControlDeAutoBus.Domain.Entities
         public DateTime DataOfBirth { get; set; }
 
         public bool IsDeleted { get; set; }
+        public bool Activo { get; set; }
     }
 }

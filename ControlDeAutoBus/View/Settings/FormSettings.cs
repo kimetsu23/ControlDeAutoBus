@@ -41,6 +41,7 @@ namespace ControlDeAutoBus.View.Settings
             dtpRol.DataSource = roles;
             dtpRol.DisplayMember = "Nombre";
             dtpRol.ValueMember = "Id";
+            dtpRol.SelectedIndex = -1;
         }
 
         private void LoadUser()
@@ -54,12 +55,16 @@ namespace ControlDeAutoBus.View.Settings
 
                 txtClave.Text = "";
 
-                dtpRol.SelectedItem = _UserResponse.Rol;
+                dtpRol.SelectedValue = _UserResponse.Rol;
             }
         }
 
         public void btnRegistrar_Click(object sender, EventArgs e)
         {
+            try
+            {
+                
+            
             var userRequest = new UsuarioRequest
             {
                 Id = _UserResponse?.Id ?? Guid.Empty,
@@ -85,6 +90,16 @@ namespace ControlDeAutoBus.View.Settings
             );
 
             Navigator.GoTo(new Table(_mainForm));
+        }
+            catch (InvalidOperationException ex)
+            {
+                MessageBox.Show(
+                    ex.Message,
+                    "Usuario duplicado",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Warning
+                );
+            }
         }
         private void IconEye_MouseEnter(object sender, EventArgs e)
         {

@@ -79,6 +79,7 @@ namespace ControlDeAutoBus.View.Settings
             var data = _usuarioController.GetAllUsers();
             // Agregar columnas
             tableGrid.Columns.Add("ID", "ID");
+            tableGrid.Columns.Add("Nombre", "Nombre");
             tableGrid.Columns.Add("Nombre de Usuario", "Nombre de Usuario");
 
             if (!tableGrid.Columns.Contains("Acciones"))
@@ -89,7 +90,7 @@ namespace ControlDeAutoBus.View.Settings
             tableGrid.Rows.Clear();
             foreach (var item in data)
             {
-                tableGrid.Rows.Add(item.Id.ToString(), item.Name);
+                tableGrid.Rows.Add(item.Id.ToString(), item.Name, item.User);
             }
 
             lblShowing.Text = $"Mostrando 0 a 0 de 0 entradas";

@@ -116,7 +116,7 @@ namespace ControlDeAutoBus.View.Routes
             {
                 var ruta = _routesController.GetRouteById(Id);
 
-                Navigator.GoTo(new FormRouter(ruta));
+                Navigator.GoTo(new FormAssigments(ruta));
 
                 return;
             }
@@ -149,7 +149,7 @@ namespace ControlDeAutoBus.View.Routes
         }
         private void btnRegistrar_Click_1(object sender, EventArgs e)
         {
-            Navigator.GoTo(new FormRouter(_mainForm));
+            Navigator.GoTo(new FormAssigments(_mainForm));
         }
 
 
