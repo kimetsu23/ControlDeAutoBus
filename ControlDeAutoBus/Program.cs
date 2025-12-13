@@ -1,4 +1,5 @@
 using ControlDeAutoBus.Core;
+using ControlDeAutoBus.View;
 
 namespace ControlDeAutoBus
 {
@@ -15,7 +16,7 @@ namespace ControlDeAutoBus
             ApplicationConfiguration.Initialize();
 
             AppServices.Init();
-            Application.Run(new FormMainHome());
+            Application.Run(new FormLogin());
         }
     }
 }

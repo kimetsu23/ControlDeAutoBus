@@ -5,6 +5,7 @@ using ControlDeAutoBus.Domain.Response;
 using ControlDeAutoBus.Domain.Services.Interface;
 using ControlDeAutoBus.Domain.SharedInterfaces;
 using Microsoft.Data.SqlClient;
+using System.ComponentModel.DataAnnotations;
 
 namespace ControlDeAutoBus.Domain.Services
 {
@@ -100,6 +101,30 @@ namespace ControlDeAutoBus.Domain.Services
             catch (Exception ex)
             {
                 throw new Exception("Error al obtener el usuario por ID.", ex);
+            }
+        }
+
+        public UsuarioResponse Authenticate(string username, string password)
+        {
+            try
+            {
+                var user = _userRepository.GetByUser(username);
+                if (user == null || !PasswordHasher.VerifyPassword(password, user.Password))
+                {
+                    return null;
+                }
+                return new UsuarioResponse
+                {
+                    Id = user.Id,
+                    Name = user.Name,
+                    LastName = user.LastName,
+                    User = user.User,
+                    Rol = user.Rol
+                };
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error al autenticar el usuario.", ex);
             }
         }
         public void Delete(Guid id)

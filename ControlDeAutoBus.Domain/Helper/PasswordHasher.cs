@@ -22,5 +22,10 @@ namespace ControlDeAutoBus.Domain.Helper
                 return sb.ToString();
             }
         }
+        public static bool VerifyPassword(string password, string hashedPassword)
+        {
+            var hash = HashPassword(password);
+            return hash == hashedPassword;
+        }
     }
 }

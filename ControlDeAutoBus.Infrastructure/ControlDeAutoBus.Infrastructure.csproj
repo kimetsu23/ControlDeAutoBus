@@ -11,9 +11,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Migrations\" />
-    <Folder Include="UnitOfWord\" />
-    <Folder Include="Persistence\" />
+    <Folder Include="QuerySql\" />
   </ItemGroup>
 
   <ItemGroup>

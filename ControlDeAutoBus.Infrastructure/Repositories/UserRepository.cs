@@ -115,6 +115,31 @@ namespace ControlDeAutoBus.Infrastructure.Repositories
             }
         }
 
+        public Usuarios GetByUser(string username)
+        {
+            using var connection = new SqlConnection(_connectionString);
+            using var cmd = new SqlCommand("Usuario_GetByUser", connection);
+            cmd.CommandType = CommandType.StoredProcedure;
+
+            cmd.Parameters.AddWithValue("@User", username);
+
+            connection.Open();
+
+            using var reader = cmd.ExecuteReader();
+            if (!reader.Read())
+                return null;
+
+            return new Usuarios
+            {
+                Id = reader.GetGuid(reader.GetOrdinal("UsuarioID")),
+                Name = reader.GetString(reader.GetOrdinal("Nombre")),
+                LastName = reader.GetString(reader.GetOrdinal("Apellido")),
+                User = reader.GetString(reader.GetOrdinal("Usuario")),
+                Password = reader.GetString(reader.GetOrdinal("Clave")),
+                Rol = reader.GetInt32(reader.GetOrdinal("RolID"))
+            };
+        }
+
         public void Delete(Guid id)
         {
             using (SqlConnection connection = new SqlConnection(_connectionString))
