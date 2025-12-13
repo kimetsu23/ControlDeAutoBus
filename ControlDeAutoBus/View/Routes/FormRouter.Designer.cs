@@ -1,6 +1,6 @@
 ﻿namespace ControlDeAutoBus.View.Routes
 {
-    partial class FormAssigments
+    partial class FormRouter
     {
         /// <summary>
         /// Required designer variable.
