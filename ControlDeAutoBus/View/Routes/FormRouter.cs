@@ -33,19 +33,31 @@ namespace ControlDeAutoBus.View.Routes
 
         public void btnRegistrar_Click(object sender, EventArgs e)
         {
-            var rutaRequest = new Domain.Request.RutasRequest
+            try
             {
-                Id = _ruta?.Id ?? 0,
-                NameRoute = txtNombreRuta.Text,
-            };
-            _routesController.AddOrUpdateRoute(rutaRequest);
-            MessageBox.Show(
-                _ruta == null ? "Ruta registrada exitosamente." : "Ruta actualizada exitosamente.",
-                "Éxito",
-                MessageBoxButtons.OK,
-                MessageBoxIcon.Information
-            );
-            Navigator.GoTo(new Table(_mainForm));
+                var rutaRequest = new Domain.Request.RutasRequest
+                {
+                    Id = _ruta?.Id ?? 0,
+                    NameRoute = txtNombreRuta.Text,
+                };
+                _routesController.AddOrUpdateRoute(rutaRequest);
+                MessageBox.Show(
+                    _ruta == null ? "Ruta registrada exitosamente." : "Ruta actualizada exitosamente.",
+                    "Éxito",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Information
+                );
+                Navigator.GoTo(new Table(_mainForm));
+            }
+            catch (InvalidOperationException ex)
+            {
+                MessageBox.Show(
+                    ex.Message,
+                    "Nombre de ruta duplicado",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Warning
+                );
+            }
 
         }
     }

@@ -4,6 +4,7 @@ using ControlDeAutoBus.Domain.Response;
 using ControlDeAutoBus.Domain.Services.Interface;
 using ControlDeAutoBus.Domain.SharedInterfaces;
 using ControlDeAutoBus.Infrastructure.Repositories;
+using Microsoft.Data.SqlClient;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -29,6 +30,19 @@ namespace ControlDeAutoBus.Domain.Services
         public void AddOrUpdate(AsignacionRequest request)
         {
             if (request == null) throw new ArgumentNullException(nameof(request));
+
+            
+                var existingAsignaciones = _asignacionRepository.GetAll();
+
+                if (existingAsignaciones.Any(a =>
+                     a.RouteId == request.RouteId &&
+                     a.Id != request.Id))
+                {
+                    throw new InvalidOperationException(
+                        "Ya existe una asignación con esta ruta."
+                    );
+                }
+            
             try
             {
                 var asignacionEntity = new Asignaciones
@@ -66,6 +80,12 @@ namespace ControlDeAutoBus.Domain.Services
                     _routeRepository.Update(existingRoute);
                 }
 
+            }
+            catch (SqlException ex) when (ex.Number == 2627 || ex.Number == 2601)
+            {
+                throw new InvalidOperationException(
+                    "El nombre de usuario ya existe."
+                );
             }
             catch (Exception ex)
             {
@@ -108,36 +128,21 @@ namespace ControlDeAutoBus.Domain.Services
             };
         }
 
-        public List<Choferes> GetAvailableChoferes()
+        public List<Choferes> GetAvailableChoferes(int? asignacionId = null)
         {
-            var choferes = _asignacionRepository.GetAvailableChoferes();
-            return choferes.Select(c => new Choferes
-            {
-                Id = c.Id,
-                Name = c.Name,
-            }).Where(c => !c.IsDeleted && !c.Activo).ToList() ;
+            return _asignacionRepository
+                .GetAvailableChoferes(asignacionId);
         }
 
-        public List<Autobuses> GetAvailableBuses()
+        public List<Autobuses> GetAvailableBuses(int? asignacionId = null)
         {
-            var buses = _asignacionRepository.GetAvailableBuses();
-            return buses.Select(b => new Autobuses
-            {
-                Id = b.Id,
-                Brand = b.Brand,
-                Model = b.Model
-             
-            }).Where(c => !c.IsDeleted && !c.Activo).ToList();
+            return _asignacionRepository
+                .GetAvailableBuses(asignacionId);
         }
-
-        public List<Ruta> GetAvailableRoutes()
+        public List<Ruta> GetAvailableRoutes(int? asignacionId = null)
         {
-            var rutas = _asignacionRepository.GetAvailableRoutes();
-            return rutas.Select(r => new Ruta
-            {
-                Id = r.Id,
-                NameRoute = r.NameRoute
-            }).Where(c => !c.IsDeleted && !c.Activo).ToList();
+            return _asignacionRepository
+                .GetAvailableRoutes(asignacionId);
         }
         public void Delete(int id)
         {

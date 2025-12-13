@@ -120,12 +120,16 @@ namespace ControlDeAutoBus.Infrastructure.Repositories
             cmd.ExecuteNonQuery();
         }
 
-        public List<Choferes> GetAvailableChoferes()
+        public List<Choferes> GetAvailableChoferes(int? asignacionId = null)
         {
             var list = new List<Choferes>();
+
             using var connection = new SqlConnection(_connectionString);
             using var cmd = new SqlCommand("GetAvailableAsignables", connection);
             cmd.CommandType = CommandType.StoredProcedure;
+
+            if (asignacionId.HasValue)
+                cmd.Parameters.AddWithValue("@AsignacionId", asignacionId.Value);
 
             connection.Open();
             using var reader = cmd.ExecuteReader();
@@ -143,12 +147,16 @@ namespace ControlDeAutoBus.Infrastructure.Repositories
             return list;
         }
 
-        public List<Autobuses> GetAvailableBuses()
+        public List<Autobuses> GetAvailableBuses(int? asignacionId = null)
         {
             var list = new List<Autobuses>();
+
             using var connection = new SqlConnection(_connectionString);
             using var cmd = new SqlCommand("GetAvailableAsignables", connection);
             cmd.CommandType = CommandType.StoredProcedure;
+
+            if (asignacionId.HasValue)
+                cmd.Parameters.AddWithValue("@AsignacionId", asignacionId.Value);
 
             connection.Open();
             using var reader = cmd.ExecuteReader();
@@ -167,18 +175,22 @@ namespace ControlDeAutoBus.Infrastructure.Repositories
             return list;
         }
 
-        public List<Ruta> GetAvailableRoutes()
+        public List<Ruta> GetAvailableRoutes(int? asignacionId = null)
         {
             var list = new List<Ruta>();
+
             using var connection = new SqlConnection(_connectionString);
             using var cmd = new SqlCommand("GetAvailableAsignables", connection);
             cmd.CommandType = CommandType.StoredProcedure;
 
+            if (asignacionId.HasValue)
+                cmd.Parameters.AddWithValue("@AsignacionId", asignacionId.Value);
+
             connection.Open();
             using var reader = cmd.ExecuteReader();
 
-            reader.NextResult(); 
-            reader.NextResult(); 
+            reader.NextResult();
+            reader.NextResult();
             while (reader.Read())
             {
                 list.Add(new Ruta

@@ -98,7 +98,7 @@ namespace ControlDeAutoBus.View.Drivers
 
             foreach (var driver in data)
             {
-                tableGrid.Rows.Add(driver.Id, driver.Name, driver.LastName, driver.IdCard, driver.DataOfBirth);
+                tableGrid.Rows.Add(driver.Id, driver.Name, driver.LastName, driver.IdCard, driver.DataOfBirth.ToString("dd/MM/yyyy"));
             }
 
             lblShowing.Text = $"Mostrando 0 a 0 de 0 entradas";
