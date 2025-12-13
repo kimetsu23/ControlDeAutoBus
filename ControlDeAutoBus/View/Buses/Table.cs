@@ -1,4 +1,6 @@
-﻿using ControlDeAutoBus.View.Drivers;
+﻿using ControlDeAutoBus.Controller;
+using ControlDeAutoBus.Core;
+using ControlDeAutoBus.View.Drivers;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -14,11 +16,15 @@ namespace ControlDeAutoBus.View.Buses
 {
     public partial class Table : Form
     {
-        private readonly FormMainHome _mainForm;
+        private FormMainHome mainForm;
+
+        private BusController _busController => AppServices.BusController;
+
         public Table(FormMainHome mainForm)
         {
             InitializeComponent();
-            _mainForm = mainForm;
+            this.mainForm = mainForm;
+            tableGrid.CellClick += tableGrid_CellClick;
         }
 
         // Eventos del TextBox de búsqueda
@@ -72,6 +78,7 @@ namespace ControlDeAutoBus.View.Buses
 
         private void LoadSampleData()
         {
+            var data = _busController.GetAllBuses();
             // Agregar columnas
             tableGrid.Columns.Add("ID", "ID");
             tableGrid.Columns.Add("Marca", "Marca");
@@ -85,14 +92,61 @@ namespace ControlDeAutoBus.View.Buses
             tableGrid.Columns["Marca"].Width = 200;
             tableGrid.Columns["Modelo"].Width = 100;
 
-            // Datos de ejemplo (puedes comentar esto si no tienes datos aún)
-            /*
-            tableGrid.Rows.Add("001", "Problema de red", "Juan Pérez", "2024-12-10", "Sí", "Infraestructura", "Alta", "Alto", "Urgente", "Tech1");
-            tableGrid.Rows.Add("002", "Actualización software", "María López", "2024-12-11", "No", "Software", "Media", "Medio", "Normal", "Tech2");
-            */
+            if (!tableGrid.Columns.Contains("Acciones"))
+            {
+                tableGrid.Columns.Add(new ActionsButtonsColumn { Name = "Acciones" });
+            }
 
-            lblShowing.Text = $"Mostrando 0 a 0 de 0 entradas";
+            tableGrid.Rows.Clear();
+
+            foreach (var bus in data)
+            {
+                tableGrid.Rows.Add(bus.Id, bus.Brand, bus.Model, bus.LicensePlate, bus.Color, bus.Year);
+
+                //tableGrid.Rows[index].Cells["Acciones"].Value = "Editar | Eliminar";
+            }
+
+            lblShowing.Text = $"Mostrando {data.Count} entradas";
         }
+
+
+        private void tableGrid_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex < 0 || tableGrid.Columns[e.ColumnIndex].Name != "Acciones")
+                return;
+
+            var cellBounds = tableGrid.GetCellDisplayRectangle(e.ColumnIndex, e.RowIndex, false);
+
+            int mouseX = tableGrid.PointToClient(Cursor.Position).X - cellBounds.X;
+
+            int buttonWidth = (cellBounds.Width - 15) / 2;
+
+            int busId = Convert.ToInt32(tableGrid.Rows[e.RowIndex].Cells["ID"].Value);
+
+            // CLICK EN EDITAR
+            if (mouseX < buttonWidth)
+            {
+                var bus = _busController.GetBusById(busId);
+
+                Navigator.GoTo(new FormBus(bus));
+
+                return;
+            }
+
+            // CLICK EN ELIMINAR
+            DialogResult result = MessageBox.Show(
+                "¿Seguro que quieres eliminar este autobús?",
+                "Confirmar eliminación",
+                MessageBoxButtons.YesNo,
+                MessageBoxIcon.Warning);
+
+            if (result == DialogResult.Yes)
+            {
+                _busController.DeleteBus(busId);
+                tableGrid.Rows.RemoveAt(e.RowIndex);
+            }
+        }
+
 
         //Drag Form
         [DllImport("user32.DLL", EntryPoint = "ReleaseCapture")]
@@ -108,7 +162,7 @@ namespace ControlDeAutoBus.View.Buses
 
         public void btnRegistrar_Click(object sender, EventArgs e)
         {
-            _mainForm.OpenChildForm(new FormBus(_mainForm));
+            Navigator.GoTo(new FormBus());
 
         }
     }

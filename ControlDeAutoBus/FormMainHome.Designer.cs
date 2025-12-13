@@ -1,16 +1,11 @@
-﻿namespace ControlDeAutoBus
+﻿using FontAwesome.Sharp;
+
+namespace ControlDeAutoBus
 {
     partial class FormMainHome
     {
-        /// <summary>
-        /// Required designer variable.
-        /// </summary>
         private System.ComponentModel.IContainer components = null;
 
-        /// <summary>
-        /// Clean up any resources being used.
-        /// </summary>
-        /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
         protected override void Dispose(bool disposing)
         {
             if (disposing && (components != null))
@@ -22,34 +17,37 @@
 
         #region Windows Form Designer generated code
 
-        /// <summary>
-        /// Required method for Designer support - do not modify
-        /// the contents of this method with the code editor.
-        /// </summary>
         private void InitializeComponent()
         {
             panelLayer = new Panel();
-            Ajuste = new FontAwesome.Sharp.IconButton();
-            Asignación = new FontAwesome.Sharp.IconButton();
-            Rutas = new FontAwesome.Sharp.IconButton();
-            Autobuses = new FontAwesome.Sharp.IconButton();
-            Choferes = new FontAwesome.Sharp.IconButton();
-            Dashboard = new FontAwesome.Sharp.IconButton();
+            Ajuste = new IconButton();
+            Asignación = new IconButton();
+            Rutas = new IconButton();
+            Autobuses = new IconButton();
+            Choferes = new IconButton();
+            Dashboard = new IconButton();
             PanelImage = new Panel();
-            BtnHome = new FontAwesome.Sharp.IconPictureBox();
+            BtnHome = new IconPictureBox();
             sqlCommand1 = new Microsoft.Data.SqlClient.SqlCommand();
             panel1 = new Panel();
-            BtnMini = new FontAwesome.Sharp.IconButton();
-            BtnBig = new FontAwesome.Sharp.IconButton();
-            BtnExit = new FontAwesome.Sharp.IconButton();
+            panelUser = new Panel();
+            btnLogout = new IconButton();
+            lblUserRole = new Label();
+            lblUserName = new Label();
+            iconUser = new IconPictureBox();
+            BtnMini = new IconButton();
+            BtnBig = new IconButton();
+            BtnExit = new IconButton();
             LblHome = new Label();
-            IconHome = new FontAwesome.Sharp.IconPictureBox();
+            IconHome = new IconPictureBox();
             PanelDesktop = new Panel();
-            iconPictureBox1 = new FontAwesome.Sharp.IconPictureBox();
+            iconPictureBox1 = new IconPictureBox();
             panelLayer.SuspendLayout();
             PanelImage.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)BtnHome).BeginInit();
             panel1.SuspendLayout();
+            panelUser.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)iconUser).BeginInit();
             ((System.ComponentModel.ISupportInitialize)IconHome).BeginInit();
             PanelDesktop.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)iconPictureBox1).BeginInit();
@@ -57,7 +55,7 @@
             // 
             // panelLayer
             // 
-            panelLayer.BackColor = Color.MidnightBlue;
+            panelLayer.BackColor = Color.FromArgb(31, 58, 147);
             panelLayer.Controls.Add(Ajuste);
             panelLayer.Controls.Add(Asignación);
             panelLayer.Controls.Add(Rutas);
@@ -78,9 +76,9 @@
             Ajuste.FlatAppearance.BorderSize = 0;
             Ajuste.FlatStyle = FlatStyle.Flat;
             Ajuste.ForeColor = Color.White;
-            Ajuste.IconChar = FontAwesome.Sharp.IconChar.Cog;
+            Ajuste.IconChar = IconChar.Cog;
             Ajuste.IconColor = Color.White;
-            Ajuste.IconFont = FontAwesome.Sharp.IconFont.Auto;
+            Ajuste.IconFont = IconFont.Auto;
             Ajuste.IconSize = 32;
             Ajuste.ImageAlign = ContentAlignment.MiddleLeft;
             Ajuste.Location = new Point(0, 636);
@@ -100,9 +98,9 @@
             Asignación.FlatAppearance.BorderSize = 0;
             Asignación.FlatStyle = FlatStyle.Flat;
             Asignación.ForeColor = Color.White;
-            Asignación.IconChar = FontAwesome.Sharp.IconChar.ThumbTack;
+            Asignación.IconChar = IconChar.ThumbTack;
             Asignación.IconColor = Color.White;
-            Asignación.IconFont = FontAwesome.Sharp.IconFont.Auto;
+            Asignación.IconFont = IconFont.Auto;
             Asignación.IconSize = 32;
             Asignación.ImageAlign = ContentAlignment.MiddleLeft;
             Asignación.Location = new Point(0, 352);
@@ -122,9 +120,9 @@
             Rutas.FlatAppearance.BorderSize = 0;
             Rutas.FlatStyle = FlatStyle.Flat;
             Rutas.ForeColor = Color.White;
-            Rutas.IconChar = FontAwesome.Sharp.IconChar.Route;
+            Rutas.IconChar = IconChar.Route;
             Rutas.IconColor = Color.White;
-            Rutas.IconFont = FontAwesome.Sharp.IconFont.Auto;
+            Rutas.IconFont = IconFont.Auto;
             Rutas.IconSize = 32;
             Rutas.ImageAlign = ContentAlignment.MiddleLeft;
             Rutas.Location = new Point(0, 287);
@@ -144,9 +142,9 @@
             Autobuses.FlatAppearance.BorderSize = 0;
             Autobuses.FlatStyle = FlatStyle.Flat;
             Autobuses.ForeColor = Color.White;
-            Autobuses.IconChar = FontAwesome.Sharp.IconChar.Bus;
+            Autobuses.IconChar = IconChar.Bus;
             Autobuses.IconColor = Color.White;
-            Autobuses.IconFont = FontAwesome.Sharp.IconFont.Auto;
+            Autobuses.IconFont = IconFont.Auto;
             Autobuses.IconSize = 32;
             Autobuses.ImageAlign = ContentAlignment.MiddleLeft;
             Autobuses.Location = new Point(0, 222);
@@ -166,9 +164,9 @@
             Choferes.FlatAppearance.BorderSize = 0;
             Choferes.FlatStyle = FlatStyle.Flat;
             Choferes.ForeColor = Color.White;
-            Choferes.IconChar = FontAwesome.Sharp.IconChar.DriversLicense;
+            Choferes.IconChar = IconChar.DriversLicense;
             Choferes.IconColor = Color.White;
-            Choferes.IconFont = FontAwesome.Sharp.IconFont.Auto;
+            Choferes.IconFont = IconFont.Auto;
             Choferes.IconSize = 32;
             Choferes.ImageAlign = ContentAlignment.MiddleLeft;
             Choferes.Location = new Point(0, 157);
@@ -188,9 +186,9 @@
             Dashboard.FlatAppearance.BorderSize = 0;
             Dashboard.FlatStyle = FlatStyle.Flat;
             Dashboard.ForeColor = Color.White;
-            Dashboard.IconChar = FontAwesome.Sharp.IconChar.Cube;
+            Dashboard.IconChar = IconChar.Cube;
             Dashboard.IconColor = Color.White;
-            Dashboard.IconFont = FontAwesome.Sharp.IconFont.Auto;
+            Dashboard.IconFont = IconFont.Auto;
             Dashboard.IconSize = 32;
             Dashboard.ImageAlign = ContentAlignment.MiddleLeft;
             Dashboard.Location = new Point(0, 92);
@@ -216,13 +214,13 @@
             // BtnHome
             // 
             BtnHome.Anchor = AnchorStyles.None;
-            BtnHome.BackColor = Color.MidnightBlue;
+            BtnHome.BackColor = Color.FromArgb(31, 58, 147);
             BtnHome.BackgroundImageLayout = ImageLayout.Zoom;
             BtnHome.Cursor = Cursors.Hand;
             BtnHome.ForeColor = Color.FromArgb(24, 161, 251);
-            BtnHome.IconChar = FontAwesome.Sharp.IconChar.Bus;
+            BtnHome.IconChar = IconChar.Bus;
             BtnHome.IconColor = Color.FromArgb(24, 161, 251);
-            BtnHome.IconFont = FontAwesome.Sharp.IconFont.Auto;
+            BtnHome.IconFont = IconFont.Auto;
             BtnHome.IconSize = 92;
             BtnHome.Location = new Point(0, 0);
             BtnHome.Name = "BtnHome";
@@ -239,7 +237,8 @@
             // 
             // panel1
             // 
-            panel1.BackColor = Color.MidnightBlue;
+            panel1.BackColor = Color.FromArgb(31, 58, 147);
+            panel1.Controls.Add(panelUser);
             panel1.Controls.Add(BtnMini);
             panel1.Controls.Add(BtnBig);
             panel1.Controls.Add(BtnExit);
@@ -249,21 +248,107 @@
             panel1.Location = new Point(220, 0);
             panel1.Name = "panel1";
             panel1.Size = new Size(1320, 80);
-            panel1.TabIndex = 1;
+            panel1.TabIndex = 0;
+            panel1.MouseDown += FormMainHome_MouseDown;
+            // 
+            // panelUser
+            // 
+            panelUser.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            panelUser.BackColor = Color.FromArgb(31, 58, 147);
+            panelUser.Controls.Add(lblUserRole);
+            panelUser.Controls.Add(lblUserName);
+            panelUser.Controls.Add(iconUser);
+            panelUser.Cursor = Cursors.Hand;
+            panelUser.Location = new Point(850, 0);
+            panelUser.Name = "panelUser";
+            panelUser.Size = new Size(290, 80);
+            panelUser.TabIndex = 6;
+            panelUser.MouseLeave += panelUser_MouseLeave;
+            panelUser.Click += panelUser_Click;
+            // 
+            // btnLogout
+            // 
+            btnLogout.BackColor = Color.FromArgb(24, 161, 251);
+            btnLogout.Cursor = Cursors.Hand;
+            btnLogout.FlatAppearance.BorderSize = 0;
+            btnLogout.FlatStyle = FlatStyle.Flat;
+            btnLogout.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
+            btnLogout.ForeColor = Color.White;
+            btnLogout.IconChar = IconChar.RightFromBracket;
+            btnLogout.IconColor = Color.White;
+            btnLogout.IconFont = IconFont.Auto;
+            btnLogout.IconSize = 20;
+            btnLogout.ImageAlign = ContentAlignment.MiddleLeft;
+            btnLogout.Location = new Point(1070, 80);
+            btnLogout.Name = "btnLogout";
+            btnLogout.Size = new Size(290, 40);
+            btnLogout.TabIndex = 7;
+            btnLogout.Text = "Cerrar Sesión";
+            btnLogout.TextAlign = ContentAlignment.MiddleCenter;
+            btnLogout.TextImageRelation = TextImageRelation.ImageBeforeText;
+            btnLogout.UseVisualStyleBackColor = false;
+            btnLogout.Click += BtnLogout_Click;
+            btnLogout.Visible = false;
+            // 
+            // lblUserRole
+            // 
+            lblUserRole.AutoSize = true;
+            lblUserRole.Font = new Font("Segoe UI", 8F);
+            lblUserRole.ForeColor = Color.FromArgb(200, 210, 255);
+            lblUserRole.Location = new Point(70, 45);
+            lblUserRole.Name = "lblUserRole";
+            lblUserRole.Size = new Size(40, 19);
+            lblUserRole.TabIndex = 2;
+            lblUserRole.Text = "Admin";
+            lblUserName.MouseEnter += panelUser_MouseEnter;
+            lblUserName.MouseLeave += panelUser_MouseLeave;
+            lblUserRole.Click += panelUser_Click;
+            // 
+            // lblUserName
+            // 
+            lblUserName.AutoSize = true;
+            lblUserName.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
+            lblUserName.ForeColor = Color.White;
+            lblUserName.Location = new Point(70, 20);
+            lblUserName.Name = "lblUserName";
+            lblUserName.Size = new Size(127, 23);
+            lblUserName.TabIndex = 1;
+            lblUserName.Text = "Nombre Usuario";
+            lblUserName.MouseEnter += panelUser_MouseEnter;
+            lblUserName.MouseLeave += panelUser_MouseLeave;
+            lblUserName.Click += panelUser_Click;
+            // 
+            // iconUser
+            // 
+            iconUser.BackColor = Color.FromArgb(31, 58, 147);
+            iconUser.IconChar = IconChar.UserCircle;
+            iconUser.IconColor = Color.FromArgb(24, 161, 251);
+            iconUser.IconFont = IconFont.Auto;
+            iconUser.IconSize = 50;
+            iconUser.Location = new Point(10, 15);
+            iconUser.Name = "iconUser";
+            iconUser.Size = new Size(50, 50);
+            iconUser.TabIndex = 0;
+            iconUser.TabStop = false;
+            iconUser.MouseEnter += panelUser_MouseEnter;
+            iconUser.MouseLeave += panelUser_MouseLeave;
+            iconUser.Click += panelUser_Click;
             // 
             // BtnMini
             // 
             BtnMini.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            BtnMini.BackColor = Color.MidnightBlue;
+            BtnMini.BackColor = Color.FromArgb(31, 58, 147);
+            BtnMini.Cursor = Cursors.Hand;
             BtnMini.FlatAppearance.BorderSize = 0;
+            BtnMini.FlatAppearance.MouseOverBackColor = Color.FromArgb(25, 45, 120);
             BtnMini.FlatStyle = FlatStyle.Flat;
-            BtnMini.IconChar = FontAwesome.Sharp.IconChar.Subtract;
+            BtnMini.IconChar = IconChar.WindowMinimize;
             BtnMini.IconColor = Color.White;
-            BtnMini.IconFont = FontAwesome.Sharp.IconFont.Auto;
+            BtnMini.IconFont = IconFont.Auto;
             BtnMini.IconSize = 20;
             BtnMini.Location = new Point(1188, 0);
             BtnMini.Name = "BtnMini";
-            BtnMini.Size = new Size(40, 20);
+            BtnMini.Size = new Size(40, 35);
             BtnMini.TabIndex = 5;
             BtnMini.UseVisualStyleBackColor = false;
             BtnMini.Click += BtnMini_Click;
@@ -271,16 +356,18 @@
             // BtnBig
             // 
             BtnBig.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            BtnBig.BackColor = Color.MidnightBlue;
+            BtnBig.BackColor = Color.FromArgb(31, 58, 147);
+            BtnBig.Cursor = Cursors.Hand;
             BtnBig.FlatAppearance.BorderSize = 0;
+            BtnBig.FlatAppearance.MouseOverBackColor = Color.FromArgb(25, 45, 120);
             BtnBig.FlatStyle = FlatStyle.Flat;
-            BtnBig.IconChar = FontAwesome.Sharp.IconChar.WindowMaximize;
+            BtnBig.IconChar = IconChar.WindowMaximize;
             BtnBig.IconColor = Color.White;
-            BtnBig.IconFont = FontAwesome.Sharp.IconFont.Auto;
+            BtnBig.IconFont = IconFont.Auto;
             BtnBig.IconSize = 20;
             BtnBig.Location = new Point(1234, 0);
             BtnBig.Name = "BtnBig";
-            BtnBig.Size = new Size(40, 20);
+            BtnBig.Size = new Size(40, 35);
             BtnBig.TabIndex = 4;
             BtnBig.UseVisualStyleBackColor = false;
             BtnBig.Click += BtnBig_Click;
@@ -288,16 +375,18 @@
             // BtnExit
             // 
             BtnExit.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            BtnExit.BackColor = Color.Red;
+            BtnExit.BackColor = Color.FromArgb(31, 58, 147);
+            BtnExit.Cursor = Cursors.Hand;
             BtnExit.FlatAppearance.BorderSize = 0;
+            BtnExit.FlatAppearance.MouseOverBackColor = Color.FromArgb(192, 0, 0);
             BtnExit.FlatStyle = FlatStyle.Flat;
-            BtnExit.IconChar = FontAwesome.Sharp.IconChar.Close;
+            BtnExit.IconChar = IconChar.Close;
             BtnExit.IconColor = Color.White;
-            BtnExit.IconFont = FontAwesome.Sharp.IconFont.Auto;
+            BtnExit.IconFont = IconFont.Auto;
             BtnExit.IconSize = 20;
             BtnExit.Location = new Point(1280, 0);
             BtnExit.Name = "BtnExit";
-            BtnExit.Size = new Size(40, 20);
+            BtnExit.Size = new Size(40, 35);
             BtnExit.TabIndex = 3;
             BtnExit.UseVisualStyleBackColor = false;
             BtnExit.Click += BtnExit_Click;
@@ -314,10 +403,10 @@
             // 
             // IconHome
             // 
-            IconHome.BackColor = Color.MidnightBlue;
-            IconHome.IconChar = FontAwesome.Sharp.IconChar.House;
+            IconHome.BackColor = Color.FromArgb(31, 58, 147);
+            IconHome.IconChar = IconChar.House;
             IconHome.IconColor = Color.White;
-            IconHome.IconFont = FontAwesome.Sharp.IconFont.Auto;
+            IconHome.IconFont = IconFont.Auto;
             IconHome.Location = new Point(23, 23);
             IconHome.Name = "IconHome";
             IconHome.Size = new Size(32, 34);
@@ -340,9 +429,9 @@
             iconPictureBox1.BackgroundImageLayout = ImageLayout.Zoom;
             iconPictureBox1.Cursor = Cursors.Hand;
             iconPictureBox1.ForeColor = Color.FromArgb(24, 161, 251);
-            iconPictureBox1.IconChar = FontAwesome.Sharp.IconChar.Bus;
+            iconPictureBox1.IconChar = IconChar.Bus;
             iconPictureBox1.IconColor = Color.FromArgb(24, 161, 251);
-            iconPictureBox1.IconFont = FontAwesome.Sharp.IconFont.Auto;
+            iconPictureBox1.IconFont = IconFont.Auto;
             iconPictureBox1.IconSize = 92;
             iconPictureBox1.Location = new Point(573, 222);
             iconPictureBox1.Name = "iconPictureBox1";
@@ -356,9 +445,11 @@
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1540, 686);
+            Controls.Add(btnLogout);
             Controls.Add(PanelDesktop);
             Controls.Add(panel1);
             Controls.Add(panelLayer);
+            FormBorderStyle = FormBorderStyle.None;
             Name = "FormMainHome";
             Text = "FormMainHome";
             MouseDown += FormMainHome_MouseDown;
@@ -367,31 +458,40 @@
             ((System.ComponentModel.ISupportInitialize)BtnHome).EndInit();
             panel1.ResumeLayout(false);
             panel1.PerformLayout();
+            panelUser.ResumeLayout(false);
+            panelUser.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)iconUser).EndInit();
             ((System.ComponentModel.ISupportInitialize)IconHome).EndInit();
             PanelDesktop.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)iconPictureBox1).EndInit();
             ResumeLayout(false);
         }
 
+
         #endregion
 
         private Panel panelLayer;
         private Panel PanelImage;
         private Microsoft.Data.SqlClient.SqlCommand sqlCommand1;
-        private FontAwesome.Sharp.IconButton Dashboard;
-        private FontAwesome.Sharp.IconButton Ajuste;
-        private FontAwesome.Sharp.IconButton Asignación;
-        private FontAwesome.Sharp.IconButton Rutas;
-        private FontAwesome.Sharp.IconButton Autobuses;
-        private FontAwesome.Sharp.IconButton Choferes;
-        private FontAwesome.Sharp.IconPictureBox BtnHome;
+        private IconButton Dashboard;
+        private IconButton Ajuste;
+        private IconButton Asignación;
+        private IconButton Rutas;
+        private IconButton Autobuses;
+        private IconButton Choferes;
+        private IconPictureBox BtnHome;
         private Panel panel1;
-        private FontAwesome.Sharp.IconPictureBox IconHome;
+        private IconPictureBox IconHome;
         private Label LblHome;
         private Panel PanelDesktop;
-        private FontAwesome.Sharp.IconPictureBox iconPictureBox1;
-        private FontAwesome.Sharp.IconButton BtnExit;
-        private FontAwesome.Sharp.IconButton BtnMini;
-        private FontAwesome.Sharp.IconButton BtnBig;
+        private IconPictureBox iconPictureBox1;
+        private IconButton BtnExit;
+        private IconButton BtnMini;
+        private IconButton BtnBig;
+        private Panel panelUser;
+        private IconPictureBox iconUser;
+        private Label lblUserName;
+        private Label lblUserRole;
+        private IconButton btnLogout;
     }
 }

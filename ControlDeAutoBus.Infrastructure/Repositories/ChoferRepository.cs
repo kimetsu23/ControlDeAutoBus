@@ -8,21 +8,20 @@ namespace ControlDeAutoBus.Infrastructure.Repositories
 {
     public class ChoferRepository : IChoferRepository
     {
-        private readonly string connectionString;
+        private readonly string? _connectionString;
 
-        public ChoferRepository(IConfiguration config)
+        public ChoferRepository()
         {
-            connectionString = config.GetConnectionString("Connetion");
+            _connectionString = Database.ConnectionString;
         }
 
         public void AddAll(Choferes driver)
         {
-            using (SqlConnection connection = new SqlConnection(connectionString))
+            using (SqlConnection connection = new SqlConnection(_connectionString))
             {
                 SqlCommand cmd = new SqlCommand("RegistrarChofer", connection);
                 cmd.CommandType = CommandType.StoredProcedure;
 
-                cmd.Parameters.AddWithValue("@UsuarioID", driver.UserId);
                 cmd.Parameters.AddWithValue("@Nombre", driver.Name);
                 cmd.Parameters.AddWithValue("@Apellido", driver.LastName);
                 cmd.Parameters.AddWithValue("@Cedula", driver.IdCard);
@@ -37,7 +36,7 @@ namespace ControlDeAutoBus.Infrastructure.Repositories
         {
             var drivers = new List<Choferes>();
 
-            using (SqlConnection connection = new SqlConnection(connectionString))
+            using (SqlConnection connection = new SqlConnection(_connectionString))
             {
                 SqlCommand cmd = new SqlCommand("Chofer_GetAll", connection);
                 cmd.CommandType = CommandType.StoredProcedure;
@@ -49,12 +48,11 @@ namespace ControlDeAutoBus.Infrastructure.Repositories
                 {
                     drivers.Add(new Choferes
                     {
-                        Id = reader.GetInt32(0),
-                        UserId = reader.GetInt32(1),
-                        Name = reader.GetString(2),
-                        LastName = reader.GetString(3),
-                        IdCard = reader.GetString(4),
-                        DataOfBirth = reader.GetDateTime(5)
+                        Id = reader.GetInt32(reader.GetOrdinal("ChoferID")),
+                        Name = reader.GetString(reader.GetOrdinal("Nombre")),
+                        LastName = reader.GetString(reader.GetOrdinal("Apellido")),
+                        DataOfBirth = reader.GetDateTime(reader.GetOrdinal("FechaNacimiento")),
+                        IdCard = reader.GetString(reader.GetOrdinal("Cedula"))
                     });
                 }
             }
@@ -64,13 +62,13 @@ namespace ControlDeAutoBus.Infrastructure.Repositories
 
         public Choferes GetById(int id)
         {
-            Choferes driver = null;
+            Choferes? driver = null;
 
-            using (SqlConnection connection = new SqlConnection(connectionString))
+            using (SqlConnection connection = new SqlConnection(_connectionString))
             {
                 SqlCommand cmd = new SqlCommand("Chofer_GetById", connection);
                 cmd.CommandType = CommandType.StoredProcedure;
-                cmd.Parameters.AddWithValue("@Id", id);
+                cmd.Parameters.AddWithValue("@ChoferID", id);
 
                 connection.Open();
                 SqlDataReader reader = cmd.ExecuteReader();
@@ -79,32 +77,31 @@ namespace ControlDeAutoBus.Infrastructure.Repositories
                 {
                     driver = new Choferes
                     {
-                        Id = reader.GetInt32(0),
-                        UserId = reader.GetInt32(1),
-                        Name = reader.GetString(2),
-                        LastName = reader.GetString(3),
-                        IdCard = reader.GetString(4),
-                        DataOfBirth = reader.GetDateTime(5)
+                        Id = reader.GetInt32(reader.GetOrdinal("ChoferID")),
+                        Name = reader.GetString(reader.GetOrdinal("Nombre")),
+                        LastName = reader.GetString(reader.GetOrdinal("Apellido")),
+                        DataOfBirth = reader.GetDateTime(reader.GetOrdinal("FechaNacimiento")),
+                        IdCard = reader.GetString(reader.GetOrdinal("Cedula"))
                     };
                 }
             }
 
-            return driver;
+            return driver ?? throw new InvalidOperationException($"No se encontró un chofer con el Id {id}.");
         }
 
         public void Update(Choferes driver)
         {
-            using (SqlConnection connection = new SqlConnection(connectionString))
+            using (SqlConnection connection = new SqlConnection(_connectionString))
             {
                 SqlCommand cmd = new SqlCommand("Chofer_Update", connection);
                 cmd.CommandType = CommandType.StoredProcedure;
 
-                cmd.Parameters.AddWithValue("@Id", driver.Id);
-                cmd.Parameters.AddWithValue("@UsuarioID", driver.UserId);
+                cmd.Parameters.AddWithValue("@ChoferID", driver.Id);
                 cmd.Parameters.AddWithValue("@Nombre", driver.Name);
                 cmd.Parameters.AddWithValue("@Apellido", driver.LastName);
                 cmd.Parameters.AddWithValue("@Cedula", driver.IdCard);
                 cmd.Parameters.AddWithValue("@FechaNacimiento", driver.DataOfBirth);
+                cmd.Parameters.AddWithValue("@Activo", driver.Activo);
 
                 connection.Open();
                 cmd.ExecuteNonQuery();
@@ -113,11 +110,11 @@ namespace ControlDeAutoBus.Infrastructure.Repositories
 
         public void Delete(int id)
         {
-            using (SqlConnection connection = new SqlConnection(connectionString))
+            using (SqlConnection connection = new SqlConnection(_connectionString))
             {
                 SqlCommand cmd = new SqlCommand("Chofer_SoftDelete", connection);
                 cmd.CommandType = CommandType.StoredProcedure;
-                cmd.Parameters.AddWithValue("@Id", id);
+                cmd.Parameters.AddWithValue("@ChoferID", id);
 
                 connection.Open();
                 cmd.ExecuteNonQuery();

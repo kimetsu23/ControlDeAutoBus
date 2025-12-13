@@ -1,0 +1,138 @@
+﻿using ControlDeAutoBus.Domain.Entities;
+using ControlDeAutoBus.Domain.Helper;
+using ControlDeAutoBus.Domain.Request;
+using ControlDeAutoBus.Domain.Response;
+using ControlDeAutoBus.Domain.Services.Interface;
+using ControlDeAutoBus.Domain.SharedInterfaces;
+using Microsoft.Data.SqlClient;
+using System.ComponentModel.DataAnnotations;
+
+namespace ControlDeAutoBus.Domain.Services
+{
+    public class UserServices : IUserServices
+    {
+        private readonly IUserRepository _userRepository;
+        public UserServices(IUserRepository userRepository) 
+        {
+            _userRepository = userRepository;
+        }
+
+        public void AddOrUpdate(UsuarioRequest request)
+        {
+            if (request == null) throw new ArgumentNullException(nameof(request));
+
+            if (request.Id == Guid.Empty)
+            {
+                var existingUsers = _userRepository.GetAll();
+                if (existingUsers.Any(u => u.User.Equals(request.User, StringComparison.OrdinalIgnoreCase)))
+                {
+                    throw new InvalidOperationException("Ya existe un usuario con el mismo nombre de usuario.");
+                }
+            }
+
+            try
+            {
+                var userEntity = new Usuarios
+                {
+                    Id = request.Id,
+                    Name = request.Name,
+                    LastName = request.LastName,
+                    User = request.User,
+                    Password = PasswordHasher.HashPassword(request.Password),
+                    Rol = request.Rol,
+                    CreateDate = DateTime.Now
+                };
+                if (request.Id == Guid.Empty)
+                {
+                    _userRepository.AddAll(userEntity);
+                }
+                else
+                {
+                    _userRepository.Update(userEntity);
+                }
+            }
+            catch (SqlException ex) when (ex.Number == 2627 || ex.Number == 2601)
+            {
+                throw new InvalidOperationException(
+                    "El nombre de usuario ya existe."
+                );
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error al agregar o actualizar el usuario.", ex);
+            }
+        }
+        public List<UsuarioResponse> GetAll()
+        {
+            try
+            {
+                var users = _userRepository.GetAll();
+                return users.Select(user => new UsuarioResponse
+                {
+                    Id = user.Id,
+                    Name = user.Name,
+                    LastName = user.LastName,
+                    User = user.User,
+                    Password = user.Password,
+                    Rol = user.Rol
+                }).ToList();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error al obtener la lista de usuarios.", ex);
+            }
+        }
+        public UsuarioResponse GetById(Guid id)
+        {
+            try
+            {
+                var user = _userRepository.GetById(id);
+                if (user == null) return null;
+                return new UsuarioResponse
+                {
+                    Id = user.Id,
+                    Name = user.Name,
+                    LastName = user.LastName,
+                    User = user.User,
+                    Password = user.Password,
+                    Rol = user.Rol
+                };
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error al obtener el usuario por ID.", ex);
+            }
+        }
+
+        public UsuarioResponse Authenticate(string username, string password)
+        {
+            try
+            {
+                var user = _userRepository.GetByUser(username);
+                if (user == null || !PasswordHasher.VerifyPassword(password, user.Password))
+                {
+                    return null;
+                }
+                return new UsuarioResponse
+                {
+                    Id = user.Id,
+                    Name = user.Name,
+                    LastName = user.LastName,
+                    User = user.User,
+                    Rol = user.Rol
+                };
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error al autenticar el usuario.", ex);
+            }
+        }
+        public void Delete(Guid id)
+        {
+            var user = _userRepository.GetById(id);
+            if (user == null)
+                throw new KeyNotFoundException("El usuario no existe.");
+            _userRepository.Delete(id);
+        }
+    }
+}

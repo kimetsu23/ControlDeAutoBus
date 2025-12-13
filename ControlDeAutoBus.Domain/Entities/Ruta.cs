@@ -11,5 +11,6 @@ namespace ControlDeAutoBus.Domain.Entities
         public int Id { get; set; }
         public string? NameRoute { get; set; }
         public bool IsDeleted { get; set; }
+        public bool Activo { get;  set; }
     }
 }

@@ -12,6 +12,10 @@ namespace ControlDeAutoBus.Domain.Entities
         public int DriverId { get; set; }
         public int BusId { get; set; }
         public int RouteId { get; set; }
+        public string? DriverNombre { get; set; }
+        public string? BusNombre { get; set; }
+        public string? RutaNombre { get; set; }
+        public bool Activa { get; set; }
         public DateTime DateAssignment { get; set; }
         public bool IsDeleted { get; set; }
     }

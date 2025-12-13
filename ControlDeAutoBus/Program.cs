@@ -1,3 +1,6 @@
+using ControlDeAutoBus.Core;
+using ControlDeAutoBus.View;
+
 namespace ControlDeAutoBus
 {
     internal static class Program
@@ -11,7 +14,9 @@ namespace ControlDeAutoBus
             // To customize application configuration such as set high DPI settings or default font,
             // see https://aka.ms/applicationconfiguration.
             ApplicationConfiguration.Initialize();
-            Application.Run(new FormMainHome());
+
+            AppServices.Init();
+            Application.Run(new FormLogin());
         }
     }
 }

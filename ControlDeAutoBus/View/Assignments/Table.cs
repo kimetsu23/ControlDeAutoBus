@@ -1,4 +1,7 @@
-﻿using System;
+﻿using ControlDeAutoBus.Controller;
+using ControlDeAutoBus.Core;
+using ControlDeAutoBus.View.Routes;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -14,10 +17,12 @@ namespace ControlDeAutoBus.View.Assignments
     public partial class Table : Form
     {
         private readonly FormMainHome _mainForm;
+        private AsignacionController _asignacionController => AppServices.AsignacionController;
         public Table(FormMainHome mainForm)
         {
             InitializeComponent();
             _mainForm = mainForm;
+            tableGrid.CellClick += tableGrid_CellClick;
         }
 
         // Eventos del TextBox de búsqueda
@@ -71,6 +76,7 @@ namespace ControlDeAutoBus.View.Assignments
 
         private void LoadSampleData()
         {
+            var data = _asignacionController.GetAll();
             // Agregar columnas
             tableGrid.Columns.Add("ID", "ID");
             tableGrid.Columns.Add("Chofer", "Chofer");
@@ -84,17 +90,49 @@ namespace ControlDeAutoBus.View.Assignments
             tableGrid.Columns["Chofer"].Width = 200;
             tableGrid.Columns["Auto Bus"].Width = 100;
 
-            // Datos de ejemplo (puedes comentar esto si no tienes datos aún)
-            /*
-            tableGrid.Rows.Add("001", "Problema de red", "Juan Pérez", "2024-12-10", "Sí", "Infraestructura", "Alta", "Alto", "Urgente", "Tech1");
-            tableGrid.Rows.Add("002", "Actualización software", "María López", "2024-12-11", "No", "Software", "Media", "Medio", "Normal", "Tech2");
-            */
+            if (!tableGrid.Columns.Contains("Acciones"))
+            {
+                tableGrid.Columns.Add(new ActionsButtonsColumn { Name = "Acciones" });
+            }
+
+            tableGrid.Rows.Clear();
+
+            foreach (var item in data)
+            {
+                tableGrid.Rows.Add(item.Id, item.DriverNombre, item.BusNombre, item.RutaNombre, item.Activa ? "Si" : "No", item.DateAssignment.ToString("dd/MM/yyyy"));
+                //tableGrid.Rows.Add(item.Id, item.DriverNombre, item.BusNombre, item.RutaNombre, item.DateAssignment.ToString("dd/MM/yyyy"));
+            }
+
 
             lblShowing.Text = $"Mostrando 0 a 0 de 0 entradas";
         }
 
-        //Drag Form
-        [DllImport("user32.DLL", EntryPoint = "ReleaseCapture")]
+        private void tableGrid_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex < 0 || tableGrid.Columns[e.ColumnIndex].Name != "Acciones")
+                return;
+
+            var cellBounds = tableGrid.GetCellDisplayRectangle(e.ColumnIndex, e.RowIndex, false);
+
+            int mouseX = tableGrid.PointToClient(Cursor.Position).X - cellBounds.X;
+
+            int buttonWidth = (cellBounds.Width - 15) / 2;
+
+            int Id = Convert.ToInt32(tableGrid.Rows[e.RowIndex].Cells["ID"].Value);
+
+            // CLICK EN EDITAR
+            if (mouseX < buttonWidth)
+            {
+                var ruta = _asignacionController.GetById(Id);
+
+                Navigator.GoTo(new FormAssignments(ruta));
+
+                return;
+            }
+        }
+
+            //Drag Form
+            [DllImport("user32.DLL", EntryPoint = "ReleaseCapture")]
         private extern static void ReleaseCapture();
         [DllImport("user32.DLL", EntryPoint = "SendMessage")]
         private extern static void SendMessage(System.IntPtr hWnd, int wMsg, int wParam, int lParam);
@@ -107,7 +145,7 @@ namespace ControlDeAutoBus.View.Assignments
 
         public void btnRegistrar_Click(object sender, EventArgs e)
         {
-            _mainForm.OpenChildForm(new FormAssignments(_mainForm));
+            Navigator.GoTo(new FormAssignments(_mainForm));
 
         }
     }

@@ -1,4 +1,6 @@
-﻿using System;
+﻿using ControlDeAutoBus.Controller;
+using ControlDeAutoBus.Core;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -14,10 +16,12 @@ namespace ControlDeAutoBus.View.Drivers
     public partial class Table : Form
     {
         private readonly FormMainHome _mainForm;
+        private ChoferesController _choferesController => AppServices.ChoferesController;
         public Table(FormMainHome mainForm)
         {
             InitializeComponent();
             _mainForm = mainForm;
+            tableGrid.CellClick += tableGrid_CellClick;
         }
 
         // Eventos del TextBox de búsqueda
@@ -71,27 +75,73 @@ namespace ControlDeAutoBus.View.Drivers
 
         private void LoadSampleData()
         {
+            var data = _choferesController.GetAllChoferes();
             // Agregar columnas
             tableGrid.Columns.Add("ID", "ID");
             tableGrid.Columns.Add("Nombre", "Nombre");
             tableGrid.Columns.Add("Apellido", "Apellido");
             tableGrid.Columns.Add("Fecha de Nacimiento", "Fecha de Nacimiento");
             tableGrid.Columns.Add("Cedula", "Cedula");
-            tableGrid.Columns.Add("Usuario", "Usuario");
 
             // Ajustar anchos
             tableGrid.Columns["ID"].Width = 60;
             tableGrid.Columns["Nombre"].Width = 200;
-            tableGrid.Columns["Fecha de Nacimiento"].Width = 100;
+            tableGrid.Columns["Apellido"].Width = 100;
+
+            if (!tableGrid.Columns.Contains("Acciones"))
+            {
+                tableGrid.Columns.Add(new ActionsButtonsColumn { Name = "Acciones" });
+            }
 
             // Datos de ejemplo (puedes comentar esto si no tienes datos aún)
-            /*
-            tableGrid.Rows.Add("001", "Problema de red", "Juan Pérez", "2024-12-10", "Sí", "Infraestructura", "Alta", "Alto", "Urgente", "Tech1");
-            tableGrid.Rows.Add("002", "Actualización software", "María López", "2024-12-11", "No", "Software", "Media", "Medio", "Normal", "Tech2");
-            */
+            tableGrid.Rows.Clear();
+
+            foreach (var driver in data)
+            {
+                tableGrid.Rows.Add(driver.Id, driver.Name, driver.LastName, driver.IdCard, driver.DataOfBirth);
+            }
 
             lblShowing.Text = $"Mostrando 0 a 0 de 0 entradas";
         }
+
+        private void tableGrid_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex < 0 || tableGrid.Columns[e.ColumnIndex].Name != "Acciones")
+                return;
+
+            var cellBounds = tableGrid.GetCellDisplayRectangle(e.ColumnIndex, e.RowIndex, false);
+
+            int mouseX = tableGrid.PointToClient(Cursor.Position).X - cellBounds.X;
+
+            int buttonWidth = (cellBounds.Width - 15) / 2;
+
+            int Id = Convert.ToInt32(tableGrid.Rows[e.RowIndex].Cells["ID"].Value);
+
+            // CLICK EN EDITAR
+            if (mouseX < buttonWidth)
+            {
+                var bus = _choferesController.GetChoferesById(Id);
+
+                Navigator.GoTo(new FormDrivers(bus));
+
+                return;
+            }
+
+
+            // CLICK EN ELIMINAR
+            DialogResult result = MessageBox.Show(
+                "¿Seguro que quieres eliminar este autobús?",
+                "Confirmar eliminación",
+                MessageBoxButtons.YesNo,
+                MessageBoxIcon.Warning);
+
+            if (result == DialogResult.Yes)
+            {
+                _choferesController.DeleteChoferes(Id);
+                tableGrid.Rows.RemoveAt(e.RowIndex);
+            }
+        }
+
 
         //Drag Form
         [DllImport("user32.DLL", EntryPoint = "ReleaseCapture")]
@@ -107,7 +157,7 @@ namespace ControlDeAutoBus.View.Drivers
 
         public void btnRegistrar_Click(object sender, EventArgs e)
         {
-            _mainForm.OpenChildForm(new FormDrivers(_mainForm));
+            Navigator.GoTo(new FormDrivers(_mainForm));
 
         }
     }
