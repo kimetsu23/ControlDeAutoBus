@@ -3,6 +3,7 @@ using ControlDeAutoBus.Domain.Request;
 using ControlDeAutoBus.Domain.Response;
 using ControlDeAutoBus.Domain.Services.Interface;
 using ControlDeAutoBus.Domain.SharedInterfaces;
+using Microsoft.Data.SqlClient;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,6 +24,14 @@ namespace ControlDeAutoBus.Domain.Services
         {
             if (request == null)
                 throw new ArgumentNullException(nameof(request), "El request no puede ser nulo.");
+            if (request.Id == 0)
+            {
+                var existingUsers = _routeRepository.GetAll();
+                if (existingUsers.Any(u => u.NameRoute.Equals(request.NameRoute, StringComparison.OrdinalIgnoreCase)))
+                {
+                    throw new InvalidOperationException("Ya existe un usuario con el mismo nombre de usuario.");
+                }
+            }
             try
             {
                 if (request.Id == 0)
@@ -40,6 +49,12 @@ namespace ControlDeAutoBus.Domain.Services
                     existingRoute.IsDeleted = false;
                 existingRoute.NameRoute = request.NameRoute;
                 _routeRepository.Update(existingRoute);
+            }
+            catch (SqlException ex) when (ex.Number == 2627 || ex.Number == 2601)
+            {
+                throw new InvalidOperationException(
+                    "El nombre de ruta ya existe."
+                );
             }
             catch (Exception ex)
             {

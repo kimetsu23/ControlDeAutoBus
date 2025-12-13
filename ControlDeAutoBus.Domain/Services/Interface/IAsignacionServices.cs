@@ -15,8 +15,8 @@ namespace ControlDeAutoBus.Domain.Services.Interface
         List<AsignacionResponse> GetAll();
         AsignacionResponse GetById(int id);
         void Delete(int id);
-        List<Choferes> GetAvailableChoferes();
-        List<Autobuses> GetAvailableBuses();
-        List<Ruta> GetAvailableRoutes();
+        List<Choferes> GetAvailableChoferes(int? asignacionId = null);
+        List<Autobuses> GetAvailableBuses(int? asignacionId = null);
+        List<Ruta> GetAvailableRoutes(int? asignacionId = null);
     }
 }

@@ -18,9 +18,6 @@ namespace ControlDeAutoBus.View.Assignments
     {
         private readonly FormMainHome _mainForm;
         private AsignacionController _asignacionController => AppServices.AsignacionController;
-        private ChoferesController _choferesController => AppServices.ChoferesController;
-        private BusController _busController => AppServices.BusController;
-        private RutasController _routesController => AppServices.RutasController;
         private AsignacionResponse _asignacionResponse;
         public FormAssignments(FormMainHome mainHome)
         {
@@ -44,20 +41,31 @@ namespace ControlDeAutoBus.View.Assignments
         }
         private void LoadComboBoxes()
         {
-            // Choferes
-            dtpChoferes.DataSource = _asignacionController.GetChoferes();
+            bool isEdit = _asignacionResponse != null;
+
+            //CHOFERES
+            dtpChoferes.DataSource = isEdit
+                ? _asignacionController.GetChoferes(_asignacionResponse.Id)
+                : _asignacionController.GetChoferes();
+
             dtpChoferes.DisplayMember = "Name";
             dtpChoferes.ValueMember = "Id";
             dtpChoferes.SelectedIndex = -1;
 
-            // Autobuses
-            dtpAutoBuses.DataSource = _asignacionController.GetAutobuses();
+            //AUTOBUSES 
+            dtpAutoBuses.DataSource = isEdit
+                ? _asignacionController.GetAutobuses(_asignacionResponse.Id)
+                : _asignacionController.GetAutobuses();
+
             dtpAutoBuses.DisplayMember = "MarcaModelo";
             dtpAutoBuses.ValueMember = "Id";
             dtpAutoBuses.SelectedIndex = -1;
 
-            // Rutas
-            dtpRuta.DataSource = _asignacionController.GetRutas();
+            //RUTAS 
+            dtpRuta.DataSource = isEdit
+                ? _asignacionController.GetRutas(_asignacionResponse.Id)
+                : _asignacionController.GetRutas();
+
             dtpRuta.DisplayMember = "NameRoute";
             dtpRuta.ValueMember = "Id";
             dtpRuta.SelectedIndex = -1;
@@ -77,29 +85,73 @@ namespace ControlDeAutoBus.View.Assignments
         {
             if (_asignacionResponse != null)
             {
-                dtpChoferes.Text = _asignacionResponse.DriverNombre;
-                dtpAutoBuses.Text = _asignacionResponse.BusNombre;
-                dtpRuta.Text = _asignacionResponse.RutaNombre;
+                dtpChoferes.SelectedValue = _asignacionResponse.DriverId;
+                dtpAutoBuses.SelectedValue = _asignacionResponse.BusId;
+                dtpRuta.SelectedValue = _asignacionResponse.RouteId;
                 dtpActivo.SelectedValue = _asignacionResponse.Activa;
             }
         }
 
-  
+
 
         public void btnRegistrar_Click(object sender, EventArgs e)
         {
-
-            var asignacionRequest = new AsignacionRequest
+            try
             {
-                Id = _asignacionResponse?.Id ?? 0,
-                DriverId = Convert.ToInt32(dtpChoferes.SelectedValue),
-                BusId = Convert.ToInt32(dtpAutoBuses.SelectedValue),
-                RouteId = Convert.ToInt32(dtpRuta.SelectedValue),
-                Activa = Convert.ToBoolean(dtpActivo.SelectedValue)
-            };
-            _asignacionController.AddAll(asignacionRequest);
-            Navigator.GoTo(new Table(_mainForm));
+                if (dtpChoferes.SelectedValue == null ||
+                    dtpAutoBuses.SelectedValue == null ||
+                    dtpRuta.SelectedValue == null ||
+                    dtpActivo.SelectedValue == null)
+                {
+                    MessageBox.Show(
+                        "Debe seleccionar todos los campos antes de continuar.",
+                        "Datos incompletos",
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Warning
+                    );
+                    return;
+                }
 
+                var asignacionRequest = new AsignacionRequest
+                {
+                    Id = _asignacionResponse?.Id ?? 0,
+                    DriverId = (int)dtpChoferes.SelectedValue,
+                    BusId = (int)dtpAutoBuses.SelectedValue,
+                    RouteId = (int)dtpRuta.SelectedValue,
+                    Activa = (bool)dtpActivo.SelectedValue
+                };
+
+                _asignacionController.AddAll(asignacionRequest);
+
+                MessageBox.Show(
+                    _asignacionResponse == null
+                        ? "Asignación registrada exitosamente."
+                        : "Asignación actualizada exitosamente.",
+                    "Éxito",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Information
+                );
+
+                Navigator.GoTo(new Table(_mainForm));
+            }
+            catch (InvalidOperationException ex)
+            {
+                MessageBox.Show(
+                    ex.Message,
+                    "Error en la asignación",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Warning
+                );
+            }
+            catch (Exception)
+            {
+                MessageBox.Show(
+                    "Ocurrió un error inesperado al procesar la asignación.",
+                    "Error",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Error
+                );
+            }
         }
     }
 }

@@ -14,8 +14,8 @@ namespace ControlDeAutoBus.Domain.SharedInterfaces
         Asignaciones GetById(int id);
         void Update(Asignaciones asignacion);
         void Delete(int id);
-        List<Choferes> GetAvailableChoferes();
-        List<Autobuses> GetAvailableBuses();
-        List<Ruta> GetAvailableRoutes();
+        List<Choferes> GetAvailableChoferes(int? asignacionId = null);
+        List<Autobuses> GetAvailableBuses(int? asignacionId = null);
+        List<Ruta> GetAvailableRoutes(int? asignacionId = null);
     }
 }
