@@ -14,5 +14,6 @@ namespace ControlDeAutoBus.Domain.Services.Interface
         List<UsuarioResponse> GetAll();
         UsuarioResponse GetById(Guid id);
         void Delete(Guid id);
+        UsuarioResponse Authenticate(string username, string password);
     }
 }

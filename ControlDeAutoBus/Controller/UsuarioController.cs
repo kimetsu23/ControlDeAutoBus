@@ -30,6 +30,10 @@ namespace ControlDeAutoBus.Controller
         {
             return _userServices.GetById(id);
         }
+        public UsuarioResponse ValidateUser(string username, string password)
+        {
+            return _userServices.Authenticate(username, password);
+        }
         public void DeleteUser(Guid id)
         {
             _userServices.Delete(id);
