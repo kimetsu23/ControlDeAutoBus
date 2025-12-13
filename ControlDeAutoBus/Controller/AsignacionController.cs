@@ -33,13 +33,29 @@ namespace ControlDeAutoBus.Controller
         {
             return _services.GetAvailableChoferes();
         }
+        public List<Choferes> GetChoferes(int asignacionId)
+        {
+            return _services.GetAvailableChoferes(asignacionId);
+        }
+
         public List<Autobuses> GetAutobuses()
         {
             return _services.GetAvailableBuses();
         }
+
+        public List<Autobuses> GetAutobuses(int asignacionId)
+        {
+            return _services.GetAvailableBuses(asignacionId);
+        }
+
         public List<Ruta> GetRutas()
         {
             return _services.GetAvailableRoutes();
+        }
+
+        public List<Ruta> GetRutas(int asignacionId)
+        {
+            return _services.GetAvailableRoutes(asignacionId);
         }
         public void Delete(int id)
         {

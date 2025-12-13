@@ -99,7 +99,7 @@ namespace ControlDeAutoBus.View.Assignments
 
             foreach (var item in data)
             {
-                tableGrid.Rows.Add(item.Id, item.DriverNombre, item.BusNombre, item.RutaNombre, item.Activa ? "Si" : "No", item.DateAssignment.ToString("dd/MM/yyyy"));
+                tableGrid.Rows.Add(item.Id, item.DriverNombre, item.BusNombre, item.RutaNombre, item.Activa ? "Si" : "No", item.DateAssignment);
                 //tableGrid.Rows.Add(item.Id, item.DriverNombre, item.BusNombre, item.RutaNombre, item.DateAssignment.ToString("dd/MM/yyyy"));
             }
 
@@ -128,6 +128,19 @@ namespace ControlDeAutoBus.View.Assignments
                 Navigator.GoTo(new FormAssignments(ruta));
 
                 return;
+            }
+
+            // CLICK EN ELIMINAR
+            DialogResult result = MessageBox.Show(
+                "¿Seguro que quieres eliminar este Asinacion?",
+                "Confirmar eliminación",
+                MessageBoxButtons.YesNo,
+                MessageBoxIcon.Warning);
+
+            if (result == DialogResult.Yes)
+            {
+                _asignacionController.Delete(Id);
+                tableGrid.Rows.RemoveAt(e.RowIndex);
             }
         }
 
