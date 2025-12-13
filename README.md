@@ -130,18 +130,18 @@ La clase Database centraliza la lectura de la cadena de conexión desde appsetti
 
 Los repositorios están separados por entidad, existiendo múltiples repositorios independientes, cada uno responsable de su propio contexto de datos.
 
-Autenticación y Roles
+#Autenticación y Roles
 
-El sistema implementa autenticación basada en roles:
+El sistema implementa autenticación con control de acceso por roles:
 
 Administrador
 
-Gestión de choferes.
+Registro y gestión de choferes, rutas y autobuses.
 
-Gestión de rutas.
-
-Gestión de autobuses.
-
-Usuario estándar
+Usuario
 
 Asignación de choferes, autobuses y rutas.
+
+Chofer
+
+Rol reservado para futuras extensiones del sistema.
