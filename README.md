@@ -9,7 +9,7 @@ Sistema de Control de Autobuses – Arquitectura Multicapa
 
 Este proyecto es una aplicación de escritorio desarrollada en **C# (.NET / WinForms)** orientada a la gestión de autobuses, choferes, rutas y asignaciones. Aplica buenas prácticas de **ingeniería de software**, separación de responsabilidades, **arquitectura multicapa** y **patrones de diseño** ampliamente usados en entornos profesionales.
 
-El objetivo principal es ofrecer una solución **escalable**, **mantenible** y **segura**, adecuada como proyecto académico avanzado o como base para un sistema empresarial real.
+El objetivo principal es ofrecer una solución **escalable**, **mantenible** y **segura**, adecuada como base para un sistema empresarial real.
 
 ---
 
