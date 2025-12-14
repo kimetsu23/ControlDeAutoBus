@@ -77,7 +77,7 @@ La cadena de conexión se define en el archivo `appsettings.json` del proyecto d
 
 ```json
 "Connection": "Data Source=NAMESERVER;Initial Catalog=DATABASE;Integrated Security=True;TrustServerCertificate=True;"
-
+```
 **Configuración obligatoria:**  
 Copiar al directorio de salida: **Copiar siempre**.  
 
